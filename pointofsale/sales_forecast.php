@@ -515,12 +515,6 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                     <input type="number" id="forecastDays" min="1" max="14" placeholder="e.g., 3">
                 </div>
 
-                <label for="forecastMethod">Forecast Method</label>
-                <select id="forecastMethod">
-                    <option value="sma">Simple Moving Average (SMA)</option>
-                    <option value="exponential">Exponential Smoothing (ES)</option>
-                </select>
-
                 <button class="primary-btn" onclick="handleForecastClick()">Generate Forecast</button>
                 <button class="secondary-btn" onclick="showAllSales()">Show All Sales</button>
             </div>
@@ -625,7 +619,6 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                 const startWeek = document.getElementById("startWeek").value;
                 const endWeek = document.getElementById("endWeek").value;
                 const forecastWeeks = parseInt(document.getElementById("forecastWeeks").value);
-                const method = document.getElementById("forecastMethod").value;
 
                 if (!startWeek || !endWeek || startWeek > endWeek) {
                     alert("Please select valid start and end weeks.");
@@ -661,14 +654,13 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
 
                 const weeks = weekKeys.slice(startIndex, endIndex + 1);
                 const sales = weeks.map(w => weeklyData[w]);
-                plotForecast(weeks, sales, forecastWeeks, "Weekly", method);
+                plotDualForecast(weeks, sales, forecastWeeks, "Weekly");
             }
 
             function generateMonthlyForecast() {
                 const startMonth = document.getElementById("startMonth").value;
                 const endMonth = document.getElementById("endMonth").value;
                 const forecastMonths = parseInt(document.getElementById("forecastMonths").value);
-                const method = document.getElementById("forecastMethod").value;
 
                 if (!startMonth || !endMonth || startMonth > endMonth) {
                     alert("Please select valid start and end months.");
@@ -696,79 +688,78 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
 
                 const months = monthKeys.slice(startIndex, endIndex + 1);
                 const sales = months.map(m => monthlyData[m]);
-                plotForecast(months, sales, forecastMonths, "Monthly", method);
+                plotDualForecast(months, sales, forecastMonths, "Monthly");
             }
 
 
-            function plotForecast(labels, values, steps, type, method) {
-                let forecasted = [];
-                let combined = [...values];
-
-                if (method === "sma") {
-                    const windowSize = 3;
-                    for (let i = 0; i < steps; i++) {
-                        const avg = combined.slice(-windowSize).reduce((a, b) => a + b, 0) / windowSize;
-                        forecasted.push(avg);
-                        combined.push(avg);
-                    }
-                } else {
-                    const alpha = 0.5, beta = 0.3;
-                    let level = values[0], trend = values[1] - values[0];
-                    for (let i = 1; i < values.length; i++) {
-                        let prevLevel = level;
-                        level = alpha * values[i] + (1 - alpha) * (level + trend);
-                        trend = beta * (level - prevLevel) + (1 - beta) * trend;
-                    }
-                    for (let i = 0; i < steps; i++) forecasted.push(level + (i + 1) * trend);
+            function plotDualForecast(labels, values, steps, type) {
+                // Generate SMA Forecast
+                let smaForecast = [];
+                let smaCombined = [...values];
+                const windowSize = 3;
+                for (let i = 0; i < steps; i++) {
+                    const avg = smaCombined.slice(-windowSize).reduce((a, b) => a + b, 0) / windowSize;
+                    smaForecast.push(avg);
+                    smaCombined.push(avg);
                 }
+
+                // Generate Exponential Forecast
+                let expForecast = [];
+                const alpha = 0.5, beta = 0.3;
+                let level = values[0], trend = values[1] - values[0];
+                for (let i = 1; i < values.length; i++) {
+                    let prevLevel = level;
+                    level = alpha * values[i] + (1 - alpha) * (level + trend);
+                    trend = beta * (level - prevLevel) + (1 - beta) * trend;
+                }
+                for (let i = 0; i < steps; i++) expForecast.push(level + (i + 1) * trend);
 
                 const forecastLabels = Array.from({ length: steps }, (_, i) => `${type} +${i + 1}`);
                 const finalLabels = [...labels, ...forecastLabels];
-                const finalValues = [...values, ...forecasted];
-
-                const pointBackgroundColors = [
-                    ...values.map(() => '#10b981'),
-                    ...forecasted.map(() => '#667eea')
-                ];
 
                 if (chart) chart.destroy();
                 chart = new Chart(ctx, {
                     type: "line",
                     data: {
                         labels: finalLabels,
-                        datasets: [{
-                            label: `${type} ${method === 'sma' ? 'SMA' : 'Exponential'} Forecast`,
-                            data: finalValues,
-                            borderColor: method === 'sma' ? '#10b981' : '#667eea',
-                            backgroundColor: method === 'sma' ? 'rgba(16, 185, 129, 0.05)' : 'rgba(102, 126, 234, 0.05)',
-                            borderWidth: 3,
-                            tension: 0.4,
-                            pointRadius: 5,
-                            pointBackgroundColor: pointBackgroundColors,
-                            pointBorderColor: pointBackgroundColors,
-                            pointBorderWidth: 2,
-                            segment: { borderDash: ctx => ctx.p0DataIndex < values.length - 1 ? undefined : [5, 5] }
-                        }]
+                        datasets: [
+                            {
+                                label: `${type} SMA Forecast`,
+                                data: [...values, ...smaForecast],
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                                borderWidth: 3,
+                                tension: 0.4,
+                                pointRadius: 5,
+                                pointBackgroundColor: '#10b981',
+                                pointBorderColor: '#10b981',
+                                pointBorderWidth: 2,
+                                segment: { borderDash: ctx => ctx.p0DataIndex < values.length - 1 ? undefined : [5, 5] }
+                            },
+                            {
+                                label: `${type} Exponential Forecast`,
+                                data: [...values, ...expForecast],
+                                borderColor: '#667eea',
+                                backgroundColor: 'rgba(102, 126, 234, 0.05)',
+                                borderWidth: 3,
+                                tension: 0.4,
+                                pointRadius: 5,
+                                pointBackgroundColor: '#667eea',
+                                pointBorderColor: '#667eea',
+                                pointBorderWidth: 2,
+                                segment: { borderDash: ctx => ctx.p0DataIndex < values.length - 1 ? undefined : [5, 5] }
+                            }
+                        ]
                     },
                     options: {
                         plugins: {
-                            title: { display: true, text: `${type} Forecast (${steps} ${type === "Weekly" ? "Weeks" : "Months"})`, font: { size: 16, weight: 'bold' }, color: '#2d3748' },
+                            title: { display: true, text: `Dual ${type} Forecast - SMA vs Exponential (${steps} ${type === "Weekly" ? "Weeks" : "Months"})`, font: { size: 16, weight: 'bold' }, color: '#2d3748' },
                             datalabels: {
                                 anchor: 'end',
                                 align: 'top',
                                 color: '#000',
                                 font: { weight: 'bold', size: 11 },
-                                formatter: (v, context) => {
-                                    const isActual = context.dataIndex < values.length;
-                                    return `₱${v.toFixed(0)}`;
-                                },
-                                backgroundColor: (context) => {
-                                    const isActual = context.dataIndex < values.length;
-                                    return isActual ? '#10b981' : '#667eea';
-                                },
-                                color: '#fff',
-                                borderRadius: 4,
-                                padding: 4
+                                formatter: (v) => `₱${v.toFixed(0)}`
                             }
                         },
                         scales: { y: { beginAtZero: true, ticks: { color: '#718096' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } }, x: { ticks: { color: '#718096' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } } },
@@ -784,7 +775,6 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                 const start = document.getElementById("startDate").value;
                 const end = document.getElementById("endDate").value;
                 const forecastDays = parseInt(document.getElementById("forecastDays").value);
-                const method = document.getElementById("forecastMethod").value;
 
                 if (!start || !end || start === end) {
                     alert("Please select a valid range with different start and end dates.");
@@ -805,69 +795,83 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                 const dateRange = originalDates.slice(startIndex, endIndex + 1);
                 const salesRange = originalSales.slice(startIndex, endIndex + 1);
 
-                if (salesRange.length < 3 && method === 'sma') {
-                    alert("At least 3 data points are needed to compute the moving average.");
+                if (salesRange.length < 3) {
+                    alert("At least 3 data points are needed to compute the forecasts.");
                     return;
                 }
 
-                let forecastedSales = [];
-                let combined = [...salesRange];
+                // Generate SMA Forecast
+                let smaForecast = [];
+                let smaHybrid = [...salesRange];
+                const windowSize = 3;
+                for (let i = 0; i < forecastDays; i++) {
+                    const lastWindow = smaHybrid.slice(-windowSize);
+                    const sma = parseFloat((lastWindow.reduce((a, b) => a + b, 0) / windowSize).toFixed(2));
+                    smaForecast.push(sma);
+                    smaHybrid.push(sma);
+                }
 
-                if (method === 'sma') {
-                    const windowSize = 3;
-                    for (let i = 0; i < forecastDays; i++) {
-                        const lastWindow = combined.slice(-windowSize);
-                        const sma = parseFloat((lastWindow.reduce((a, b) => a + b, 0) / windowSize).toFixed(2));
-                        forecastedSales.push(sma);
-                        combined.push(sma);
-                    }
-                } else if (method === 'exponential') {
-                    const alpha = 0.5;
-                    const beta = 0.3;
+                // Generate Exponential Forecast
+                let expForecast = [];
+                const alpha = 0.5;
+                const beta = 0.3;
 
-                    let level = salesRange[0];
-                    let trend = salesRange[1] - salesRange[0];
+                let level = salesRange[0];
+                let trend = salesRange[1] - salesRange[0];
 
-                    for (let i = 1; i < salesRange.length; i++) {
-                        let prevLevel = level;
-                        level = alpha * salesRange[i] + (1 - alpha) * (level + trend);
-                        trend = beta * (level - prevLevel) + (1 - beta) * trend;
-                    }
+                for (let i = 1; i < salesRange.length; i++) {
+                    let prevLevel = level;
+                    level = alpha * salesRange[i] + (1 - alpha) * (level + trend);
+                    trend = beta * (level - prevLevel) + (1 - beta) * trend;
+                }
 
-                    for (let i = 0; i < forecastDays; i++) {
-                        forecastedSales.push(parseFloat((level + (i + 1) * trend).toFixed(2)));
-                    }
+                for (let i = 0; i < forecastDays; i++) {
+                    expForecast.push(parseFloat((level + (i + 1) * trend).toFixed(2)));
                 }
 
                 const forecastedLabels = Array.from({ length: forecastDays }, (_, i) => `Day +${i + 1}`);
                 const combinedLabels = [...dateRange, ...forecastedLabels];
-                const combinedSales = [...salesRange, ...forecastedSales];
 
                 if (chart) chart.destroy();
                 chart = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: combinedLabels,
-                        datasets: [{
-                            label: `Sales + ${forecastDays}-Day ${method === 'sma' ? 'SMA' : 'Exponential'} Forecast`,
-                            data: combinedSales,
-                            borderColor: method === 'sma' ? '#10b981' : '#667eea',
-                            backgroundColor: method === 'sma' ? 'rgba(16, 185, 129, 0.05)' : 'rgba(102, 126, 234, 0.05)',
-                            borderWidth: 3,
-                            pointRadius: 4,
-                            tension: 0.4,
-                            spanGaps: true,
-                            segment: {
-                                borderDash: ctx => ctx.p0DataIndex < salesRange.length - 1 ? undefined : [5, 5]
+                        datasets: [
+                            {
+                                label: `Sales + ${forecastDays}-Day SMA Forecast`,
+                                data: [...salesRange, ...smaForecast],
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                                borderWidth: 3,
+                                pointRadius: 4,
+                                tension: 0.4,
+                                spanGaps: true,
+                                segment: {
+                                    borderDash: ctx => ctx.p0DataIndex < salesRange.length - 1 ? undefined : [5, 5]
+                                }
+                            },
+                            {
+                                label: `Sales + ${forecastDays}-Day Exponential Forecast`,
+                                data: [...salesRange, ...expForecast],
+                                borderColor: '#667eea',
+                                backgroundColor: 'rgba(102, 126, 234, 0.05)',
+                                borderWidth: 3,
+                                pointRadius: 4,
+                                tension: 0.4,
+                                spanGaps: true,
+                                segment: {
+                                    borderDash: ctx => ctx.p0DataIndex < salesRange.length - 1 ? undefined : [5, 5]
+                                }
                             }
-                        }]
+                        ]
                     },
                     options: {
                         responsive: true,
                         plugins: {
                             title: {
                                 display: true,
-                                text: `${method === 'sma' ? 'Recursive SMA' : 'Exponential Smoothing'} Forecast (${forecastDays} Days) from ${end}`,
+                                text: `Dual Forecast - SMA vs Exponential Smoothing (${forecastDays} Days) from ${end}`,
                                 font: { size: 16, weight: 'bold' },
                                 color: '#2d3748'
                             },
