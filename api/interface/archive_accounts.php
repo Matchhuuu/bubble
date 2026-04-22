@@ -1,16 +1,6 @@
 <?php
 session_start();
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bh";
-
-// Create Connection
-$connection = new mysqli($servername, $username, $password, $database);
-
-if ($connection->connect_error) {
-    die("Connection Failed: " . $connection->connect_error);
-}
+include "db_conn.php"; $connection = $conn;
 
 $sql = "SELECT * FROM acc_archive";
 $result = $connection->query($sql);
@@ -26,9 +16,9 @@ if(isset($_SESSION['ACC_ID'])  && isset($_SESSION['EMAIL'])){ ?>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" href=/bubble/media/BUBBLE.jpg></link>
+    <link rel="icon" href=/media/BUBBLE.jpg></link>
     <link rel="stylesheet" href="user_accounts.css">
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
 
     <title>Archived Accounts</title>
 </head>
@@ -304,9 +294,9 @@ th {
 
         <div class="navbar">
             <div style="position: relative; width: 20px; left: 30px; display: flex; align-items: center;"></div>
-            <div class="logo"><img src="/bubble/media/BUBBLE.jpg" width="80px"></div>
+            <div class="logo"><img src="/media/BUBBLE.jpg" width="80px"></div>
             <div class="buttons">
-                <form action="/bubble/interface/user_accounts.php"><button type="submit" class="btn"> Back to Accounts </button></form>
+                <form action="/interface/user_accounts.php"><button type="submit" class="btn"> Back to Accounts </button></form>
             </div>
             
         </div>
@@ -368,18 +358,7 @@ th {
         <tbody>
 
         <?php
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $database = "bubblehideout";
-
-            // Create Connection
-            $connection = new mysqli($servername, $username, $password, $database);
-
-            // Check Connection
-            if ($connection->connect_error) {
-                die("Connection Failed: " . $connection->connect_error);
-            }
+            include "db_conn.php"; $connection = $conn;
 
             $sql = "SELECT * FROM acc_archive";
             $result = $connection->query($sql);
@@ -444,3 +423,4 @@ else  {
     header("Location: login.php");
     exit();
 }
+

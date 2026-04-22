@@ -4,7 +4,7 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-     <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+     <link rel="stylesheet" href="/fonts/fonts.css">
 <title>Order Expired</title>
 <style>
 * {
@@ -258,7 +258,7 @@ session_start();
 </head>
 <body>
     <center> <div class="img-bbl">
-        <img src="/bubble/media/BUBBLE.jpg" width="200px" height="200px"> 
+        <img src="/media/BUBBLE.jpg" width="200px" height="200px"> 
 
     </div>
     <br></center>

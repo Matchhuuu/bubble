@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$conn = new mysqli("localhost", "root", "", "bh");
+include "db_conn.php";
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -519,7 +519,7 @@ if ($items_result && $items_result->num_rows > 0) {
     </div>
 
     <button onclick="window.print()" class="print-button">Print Receipt</button>
-    <a href="/bubble/interface/homepage.php" class="back-button">← Back to Order History</a>
+    <a href="/interface/homepage.php" class="back-button">← Back to Order History</a>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

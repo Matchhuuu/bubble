@@ -1,11 +1,8 @@
 <?php
 
 
-// Database connection
-$conn = new mysqli("localhost", "root", "", "bh");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include "db_conn.php";
+
 
 // Function to generate order ID
 function generateOrderId() {

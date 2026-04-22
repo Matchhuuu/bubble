@@ -6,16 +6,7 @@ error_reporting(E_ALL);
 
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bh";
-
-$connection = new mysqli($servername, $username, $password, $database);
-
-if ($connection->connect_error) {
-    die("Connection failed: " . $connection->connect_error);
-}
+include "db_conn.php"; $connection = $conn;
 
 $connection->set_charset("utf8mb4");
 
@@ -304,8 +295,8 @@ $stats = $stats_result->fetch_assoc();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventory Depletion System - Unit-Based Automatic Deduction</title>
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
-    <link rel="icon" href="/bubble/media/BUBBLE.jpg">
+    <link rel="stylesheet" href="/fonts/fonts.css">
+    <link rel="icon" href="/media/BUBBLE.jpg">
     <style>
         * {
             margin: 0;
@@ -986,3 +977,4 @@ $stats = $stats_result->fetch_assoc();
     </script>
 </body>
 </html>
+

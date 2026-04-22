@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "root", "", "bh");
+include "db_conn.php";
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -40,7 +40,7 @@ $result = $conn->query($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discount Logs - Bubble Hideout POS</title>
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
     <style>
         * {
             margin: 0;

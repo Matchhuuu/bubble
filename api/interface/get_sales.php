@@ -1,13 +1,7 @@
 <?php
 session_start();
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bh";
-
-
-$connection = new mysqli($servername, $username, $password, $database);
+include "db_conn.php"; $connection = $conn;
 
 if(isset($_SESSION['ACC_ID'])  && isset($_SESSION['EMAIL'])){ 
 
@@ -46,5 +40,6 @@ if(isset($_SESSION['ACC_ID'])  && isset($_SESSION['EMAIL'])){
 
 }
 
-header("location: /bubble/interface/homepage.php");
+header("location: /interface/homepage.php");
 exit;
+

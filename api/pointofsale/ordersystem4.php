@@ -1,10 +1,8 @@
 <?php
 session_start();
 
-$conn = new mysqli("localhost", "root", "6!cLt88>E++", "bh");
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include "db_conn.php";
+
 
 function generateOrderId()
 {

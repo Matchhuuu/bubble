@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
-    $conn = new mysqli("localhost", "root", "", "bh");
+    include "db_conn.php";
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
@@ -37,7 +37,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-        <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+        <link rel="stylesheet" href="/fonts/fonts.css">
         <style>
             * {
                 margin: 0;
@@ -451,7 +451,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
     <body>
         <div class="navbar">
             <div class="navbar-left">
-                <form action="/bubble/interface/admin_homepage.php" style="margin: 0;">
+                <form action="/interface/admin_homepage.php" style="margin: 0;">
                     <button type="submit" class="btn">← Back</button>
                 </form>
             </div>
@@ -459,7 +459,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                 <div class="dropdown">
                     <button onclick="toggleDropdown()" class="dropbtn">Admin</button>
                     <div id="myDropdown" class="dropdown-content">
-                        <a href="/bubble/interface/logout.php">Logout</a>
+                        <a href="/interface/logout.php">Logout</a>
                     </div>
                 </div>
             </div>

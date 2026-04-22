@@ -1,19 +1,8 @@
 <?php
 session_start();
 
-// Database configuration
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "bh";
+include "db_conn.php";
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 // Set charset to utf8
 $conn->set_charset("utf8");
@@ -287,9 +276,9 @@ foreach ($sections as $section) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>POS Menu Management System</title>
-     <link rel="icon" href=/bubble/media/BUBBLE.jpg>
+     <link rel="icon" href=/media/BUBBLE.jpg>
     
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -941,7 +930,7 @@ foreach ($sections as $section) {
 <body>
     <div class="header">
         <div class="header-content">
-            <form action="/bubble/interface/admin_homepage.php"><button type="submit" class="pos-link"> Back </button></form>
+            <form action="/interface/admin_homepage.php"><button type="submit" class="pos-link"> Back </button></form>
 
             <div class="header-stats">
                 <div class="stat-item">

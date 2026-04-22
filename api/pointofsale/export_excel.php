@@ -8,15 +8,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 // DB connection
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$database   = "bh";
-$conn = new mysqli($servername, $username, $password, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include "db_conn.php";
 
 
 $month = $_POST['month'] ?? '';
@@ -235,3 +227,4 @@ $writer->save("php://output");
 
 $conn->close();
 exit;
+

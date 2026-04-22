@@ -2,16 +2,7 @@
 session_start();
 
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bh";
-
-$connection = new mysqli($servername, $username, $password, $database);
-
-if ($connection->connect_error) {
-    die(json_encode(['error' => 'Connection failed: ' . $connection->connect_error]));
-}
+include "db_conn.php"; $connection = $conn;
 
 header('Content-Type: application/json');
 
@@ -145,3 +136,4 @@ else {
 
 $connection->close();
 ?>
+

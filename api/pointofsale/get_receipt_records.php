@@ -1,18 +1,6 @@
 <?php
 
-$servername = "localhost"; 
-$username = "root";        
-$password = "";            
-$db = "bh"; 
-
-$conn = new mysqli($servername, $username, $password, $db);
-
-global $total_sale1;
-global $totalsale_disc;
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include "db_conn.php";
 
 $sql = "SELECT * FROM customer_order_items"; 
 $result = $conn->query($sql);
@@ -68,3 +56,4 @@ header("Content-Type: text/plain");
 readfile($file);
 
 ?>
+

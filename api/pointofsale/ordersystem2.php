@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$conn = new mysqli("localhost", "root", "", "bh");
+include "db_conn.php";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -357,7 +357,7 @@ if (isset($_POST['place_order'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bubble Hideout - Order System</title>
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
 </head>
 
 <style>
@@ -1377,7 +1377,7 @@ if (isset($_POST['place_order'])) {
     <!-- Redesigned header with logo integration -->
     <div class="header">
         <div class="logo-section">
-            <img src="/bubble/media/BUBBLE.jpg" alt="Bubble Hideout Logo" class="logo-img">
+            <img src="/media/BUBBLE.jpg" alt="Bubble Hideout Logo" class="logo-img">
             <div class="logo-text">
                 <h1>Bubble Hideout</h1>
                 <p>Menu</p>
@@ -1614,7 +1614,7 @@ if (isset($_POST['place_order'])) {
             sessionStorage.setItem('orderExpired', 'true');
             document.body.innerHTML = `
                 <center> <div class="img-bbl">
-                <img src="/bubble/media/BUBBLE.jpg" width="200px" height="200px"> 
+                <img src="/media/BUBBLE.jpg" width="200px" height="200px"> 
             </div>
             <br></center>
 

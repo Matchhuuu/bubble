@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" href= "/bubble/media/BUBBLE.jpg">
+    <link rel="icon" href= "/media/BUBBLE.jpg">
 
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
     <title>Bubble Hideout Login</title>
 </head>
 <style>
@@ -114,7 +114,7 @@ label {
 
 <body>
     <center> <div class="img-bbl">
-        <img src="/bubble/media/BUBBLE.jpg" width="200px" height="200px"> 
+        <img src="/media/BUBBLE.jpg" width="200px" height="200px"> 
 
     </div>
     <br></center>

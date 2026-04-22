@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "root", "", "bh");
+include "db_conn.php";
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -149,9 +149,9 @@ $totalPages = ceil($totalOrders / $limit);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href=/bubble/media/BUBBLE.jpg></link>
+    <link rel="icon" href=/media/BUBBLE.jpg></link>
     <title>View Orders - Bubble Hideout POS</title>
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
 </head>
 <style>
 body {
@@ -514,7 +514,7 @@ th {
         <div class="navbar">
             <div style="position: relative; width: 20px; left: 30px; display: flex; align-items: center;"></div>
             <div class="buttons">
-                <form action="/bubble/interface/homepage.php"><button type="submit" class="btn"> Back </button></form>
+                <form action="/interface/homepage.php"><button type="submit" class="btn"> Back </button></form>
             </div>
             
         </div>

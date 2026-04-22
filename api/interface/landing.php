@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" href=/bubble/media/BUBBLE.jpg></link>
+    <link rel="icon" href=/media/BUBBLE.jpg></link>
 
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
     <title>Bubble Hideout Login</title>
 </head>
 <style>
@@ -111,7 +111,7 @@ label {
 
 <body>
     <center> <div class="img-bbl">
-        <img src="/bubble/media/BUBBLE.jpg" width="500px" height="500px"> 
+        <img src="/media/BUBBLE.jpg" width="500px" height="500px"> 
 
     </div>
     <br></center>
@@ -120,7 +120,7 @@ label {
         <center><h1>WELCOME TO BUBBLEAID</h1></center>
         <center><p>Your Need to Help Run your Business</p></center>
 
-        <CENTer><form action="/bubble/interface/login.php"><button type="submit" class="btn"> ENTER </button></form></CENTer>
+        <CENTer><form action="/interface/login.php"><button type="submit" class="btn"> ENTER </button></form></CENTer>
         
     </div>
 

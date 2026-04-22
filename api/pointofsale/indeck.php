@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "root", "", "bh");
+include "db_conn.php";
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -835,7 +835,7 @@ if (isset($_POST['complete_order'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bubble Hideout POS</title>
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
     </link>
 
 </head>
@@ -1422,7 +1422,7 @@ if (isset($_POST['complete_order'])) {
 
 <body>
     <div class="header">
-        <a href="/bubble/interface/homepage.php" class="back-button">Back</a>
+        <a href="/interface/homepage.php" class="back-button">Back</a>
         <a href="void_logs.php" class="view-orders-button">View Void Logs</a>
         <a href="discount_logs.php" class="view-orders-button">View Discount Logs</a>
     </div>

@@ -1,12 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bh";
-
-$connection = new mysqli($servername, $username, $password, $database);
+include "db_conn.php"; $connection = $conn;
 
 if ($connection->connect_error) {
     echo json_encode(['error' => $connection->connect_error]);
@@ -45,3 +40,4 @@ while ($row = $result_inventory->fetch_assoc()) {
 
 echo json_encode($inventory_data);
 ?>
+

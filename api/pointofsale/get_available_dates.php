@@ -1,13 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bh";
-
-$conn = new mysqli($servername, $username, $password, $database);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include "db_conn.php";
 
 $months = [];
 $days = [];
@@ -28,3 +20,4 @@ while ($row = $result_days->fetch_assoc()) {
 
 echo json_encode(["months" => $months, "days" => $days]);
 ?>
+

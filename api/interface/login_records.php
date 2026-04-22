@@ -9,9 +9,9 @@ if(isset($_SESSION['ACC_ID'])  && isset($_SESSION['EMAIL'])){ ?>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" href="/bubble/media/BUBBLE.jpg"></link>
-    <link rel="stylesheet" href="/bubble/interface/login_records.css">
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="icon" href="/media/BUBBLE.jpg"></link>
+    <link rel="stylesheet" href="/interface/login_records.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
 
     <title>Log In History</title>
 </head>
@@ -330,9 +330,9 @@ select{
 
     <div class="navbar">
         <div style="position:relative;width:20px;left:30px;display:flex;align-items:center;"></div>
-        <div class="logo"><img src="/bubble/media/BUBBLE.jpg" width="80px"></div>
+        <div class="logo"><img src="/media/BUBBLE.jpg" width="80px"></div>
         <div class="buttons">
-            <form action="/bubble/interface/admin_homepage.php">
+            <form action="/interface/admin_homepage.php">
                 <button type="submit" class="btn">Back to Homepage</button>
             </form>
         </div>
@@ -374,7 +374,8 @@ select{
                     <select name="acc_id">
                         <option value="">All Accounts</option>
                         <?php
-                        $connection = new mysqli("localhost", "root", "", "bh");
+                        $connection = $conn;
+
                         $accResult = $connection->query("SELECT DISTINCT ACC_ID FROM login_history ORDER BY ACC_ID ASC");
                         while ($acc = $accResult->fetch_assoc()) {
                             $selected = (isset($_GET['acc_id']) && $_GET['acc_id'] == $acc['ACC_ID']) ? 'selected' : '';

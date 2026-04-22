@@ -1,14 +1,6 @@
 <?php
-$host = 'localhost';
-$dbname = 'bh';
-$user = 'root';
-$pass = '';
+include "db_conn.php";
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 $name = isset($_POST['name']) && trim($_POST['name']) !== '' ? trim($_POST['name']) : 'Anonymous';
 $comment = isset($_POST['comment']) ? trim($_POST['comment']) : '';

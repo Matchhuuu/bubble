@@ -1,7 +1,7 @@
 <?php
 // Connect to database
 require_once 'config.php';
-$conn = new mysqli("localhost", "root", "", "bh");
+include "db_conn.php";
 
 // Begin transaction
 $conn->begin_transaction();

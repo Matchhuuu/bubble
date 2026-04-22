@@ -1,5 +1,7 @@
 <?php
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'bh');
+define('DB_HOST', "mysql-20229225-binssente-18bc.h.aivencloud.com");
+define('DB_USER', "avnadmin");
+define('DB_PASS', getenv('DB_PASSWORD'));
+define('DB_NAME', "defaultdb");
+define('DB_PORT', "13029");
+

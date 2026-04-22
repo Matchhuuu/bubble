@@ -1,16 +1,7 @@
 <?php
-$db_host = "localhost";
-$db_user = "root";
-$db_pass = "";
-$db_name = "bh";
+include "db_conn.php";
+$connection = $conn;
 
-$connection = new mysqli($db_host, $db_user, $db_pass, $db_name);
-
-
-if ($connection->connect_error) {
-
-    die("Connection failed: " . $connection->connect_error);
-}
 
 function getExpirationStatus($expirationDate) {
     if (empty($expirationDate)) {
@@ -1189,10 +1180,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <nav class="navbar">
         <div class="navbar-left">
-            <form action="/bubble/interface/admin_homepage.php"><button type="submit" class="btn"> Back </button></form>
+            <form action="/interface/admin_homepage.php"><button type="submit" class="btn"> Back </button></form>
             <button type="button" class="btn btn-add-stock" onclick="openAddStockModal()">Add Stock</button>
-            <form action="/bubble/inventory/add_stock_history.php"><button type="submit" class="btn btn-add-stock"> Restock History </button></form>
-            <form action="/bubble/inventory/depleted_stock_history.php"><button type="submit" class="btn btn-add-stock"> Depleted History </button></form>
+            <form action="/inventory/add_stock_history.php"><button type="submit" class="btn btn-add-stock"> Restock History </button></form>
+            <form action="/inventory/depleted_stock_history.php"><button type="submit" class="btn btn-add-stock"> Depleted History </button></form>
 
         </div>
         

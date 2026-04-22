@@ -2,10 +2,8 @@
 session_start();
 
 if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
-    $conn = new mysqli("localhost", "root", "", "bh");
-    if ($conn->connect_error) {
-        die("Database connection failed: " . $conn->connect_error);
-    }
+    include "db_conn.php";
+
 
     $foods = [];
     $drinks = [];
@@ -78,8 +76,8 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="/bubble/interface/homepage.css">
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/interface/homepage.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
     <style>
@@ -293,7 +291,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
 <div class="navbar">
     <div style="position: relative; width: 20px; left: 30px; display: flex; align-items: center;"></div>
         <div class="buttons">
-            <form action="/bubble/interface/admin_homepage.php">
+            <form action="/interface/admin_homepage.php">
                 <button type="submit" class="btn"> Back </button>
             </form>
         </div>

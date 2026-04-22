@@ -2,15 +2,7 @@
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../vendor/setasign/fpdf/fpdf.php';
 
-$servername = "localhost";
-$username   = "root";
-$password   = "";
-$database   = "bh";
-
-$conn = new mysqli($servername, $username, $password, $database);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include "db_conn.php";
 
 $month = $_POST['month'] ?? '';
 $day   = $_POST['day'] ?? '';
@@ -231,3 +223,4 @@ $pdf->Output('D', 'BubbleHideout_SaleReport_[' . $date . '].pdf');
 
 $conn->close();
 ?>
+

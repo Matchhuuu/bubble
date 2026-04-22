@@ -5,13 +5,7 @@ include "db_conn.php";
 
 if(isset($_SESSION['ACC_ID'])  && isset($_SESSION['EMAIL'])){ 
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bh";
-
-// Create Connection
-$connection = new mysqli($servername, $username, $password, $database);
+include "db_conn.php"; $connection = $conn;
 
 $id = "";
 $fname = "";
@@ -98,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $successMessage = "Client Added Successfully";
 
-        header("location: /bubble/interface/user_accounts.php");
+        header("location: /interface/user_accounts.php");
         exit;
     } while (false);
 }
@@ -109,8 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" href=/bubble/media/BUBBLE.jpg></link>
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="icon" href=/media/BUBBLE.jpg></link>
+    <link rel="stylesheet" href="/fonts/fonts.css">
 
     <title>Add New Employee Account</title>
 </head>
@@ -374,9 +368,9 @@ select option{
 <body>
 <div class="navbar">
             <div style="position: relative; width: 20px; left: 30px; display: flex; align-items: center;"></div>
-            <div class="logo"><img src="/bubble/media/BUBBLE.jpg" width="80px"></div>
+            <div class="logo"><img src="/media/BUBBLE.jpg" width="80px"></div>
             <div class="buttons">
-                <form action="/bubble/interface/user_accounts.php"><button type="submit" class="btn"> Back </button></form>
+                <form action="/interface/user_accounts.php"><button type="submit" class="btn"> Back </button></form>
             </div>
             
         </div>
@@ -530,7 +524,7 @@ select option{
                     <div class="space1"></div>
 
                     <div class="sub2">
-                    <a class="btn2" href="/bubble/interface/user_accounts.php" role="button"> Cancel </a>
+                    <a class="btn2" href="/interface/user_accounts.php" role="button"> Cancel </a>
                     </div>
                 </div>
             </form>
@@ -550,3 +544,4 @@ else  {
     header("Location: login.php");
     exit();
 }
+

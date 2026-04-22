@@ -1,11 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bh";
-
-// Create Connection
-$connection = new mysqli($servername, $username, $password, $database);
+include "db_conn.php"; $connection = $conn;
 
 
 $id = "";
@@ -33,7 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] =='GET'){
     $result = $connection->query($sql);
 }   
 
-header("location: /bubble/interface/user_accounts.php");
+header("location: /interface/user_accounts.php");
 exit;
 
 ?>
+

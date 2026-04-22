@@ -2,18 +2,9 @@
 session_start();
 
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bh";
+include "db_conn.php";
+$connection = $conn;
 
-
-$connection = new mysqli($servername, $username, $password, $database);
-
-
-if ($connection->connect_error) {
-  die("Connection failed: " . $connection->connect_error);
-}
 
 // Get Total from Completed Orders
 global $total;
@@ -94,9 +85,9 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" href=/bubble/media/BUBBLE.jpg>
+    <link rel="icon" href=/media/BUBBLE.jpg>
     
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
 
 
     <title>Employee Interface</title>
@@ -628,7 +619,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
       <div class="dropdown-ver" id="del-drop">
         <div class="body">
           <p>Order Completion</p>
-          <form method="GET" action="/bubble/pointofsale/complete_order.php" id="form-delete-user">
+          <form method="GET" action="/pointofsale/complete_order.php" id="form-delete-user">
             <div>
               <p>Are you sure the ORDER is finished? </p>
               <input type="hidden" style="width: 50%; border-radius: 5px;" name="id">
@@ -693,10 +684,10 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
 
     <div class="navbar">
       <div style="position: relative; width: 20px; left: 30px; display: flex; align-items: center;"></div>
-      <div class="logo"><img src="/bubble/media/BUBBLE.jpg" width="80px"></div>
+      <div class="logo"><img src="/media/BUBBLE.jpg" width="80px"></div>
       <div class="buttons">
-        <form action="/bubble/pointofsale/indeck.php"><button type="submit" class="btn"> Point of Sale </button></form>
-        <form action="/bubble/pointofsale/order_screen.php"><button type="submit" class="btn"> Incoming Orders </button>
+        <form action="/pointofsale/indeck.php"><button type="submit" class="btn"> Point of Sale </button></form>
+        <form action="/pointofsale/order_screen.php"><button type="submit" class="btn"> Incoming Orders </button>
         </form>
       </div>
 
@@ -718,7 +709,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
     <div class="main">
       <div class="sales-summary">
         <h1 style="font-size: 60px;">Total Sale: Php <?php echo '' . number_format($total, 2, '.', ','); ?></h1>
-        <form action="/bubble/interface/get_sales.php?id="><button type="submit" class="btn-endsale"> End Sale </button>
+        <form action="/interface/get_sales.php?id="><button type="submit" class="btn-endsale"> End Sale </button>
         </form>
       </div>
 
@@ -752,18 +743,8 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                 </thead>
                 <tbody>
                   <?php
-                  $servername = "localhost";
-                  $username = "root";
-                  $password = "";
-                  $database = "bh";
+                  $connection = $conn;
 
-
-                  $connection = new mysqli($servername, $username, $password, $database);
-
-
-                  if ($connection->connect_error) {
-                    die("Connection failed: " . $connection->connect_error);
-                  }
 
 
                   $sql_returned_goods = "
@@ -800,7 +781,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                                     
                                     <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' data-id='$row[order_id]' onclick='confirmDel(this)'>Complete Order</a>
                                     <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' data-id='$row[order_id]' onclick='openModal(this)' id='chicken'>Add Chicken</a>
-                                    <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/bubble/pointofsale/view_receipt_home.php?order_id=$row[order_id]' id='viewRec'>View Receipt</a>
+                                    <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/pointofsale/view_receipt_home.php?order_id=$row[order_id]' id='viewRec'>View Receipt</a>
                                     
                                     </td>
                                 </tr>
@@ -816,7 +797,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                                     <td id='right'>
                                     
                                     <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' data-id='$row[order_id]' onclick='openModal(this)' id='chicken'>Add Chicken</a>
-                                    <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/bubble/pointofsale/view_receipt_home.php?order_id=$row[order_id]' id='viewRec'>View Receipt</a>
+                                    <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/pointofsale/view_receipt_home.php?order_id=$row[order_id]' id='viewRec'>View Receipt</a>
                                     
                                     </td>
                                 </tr>
@@ -842,7 +823,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                                         <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' data-id='$row[order_id]' onclick='confirmDel(this)'>Complete Order</a>
                                         
                                         <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' data-id='$row[order_id]' onclick='openModal(this)' id='chicken'>Add Chicken</a>
-                                        <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/bubble/pointofsale/view_receipt_home.php?order_id=$row[order_id]' id='viewRec'>View Receipt</a>
+                                        <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/pointofsale/view_receipt_home.php?order_id=$row[order_id]' id='viewRec'>View Receipt</a>
                                         
                                         </td>
                                     </tr>
@@ -860,7 +841,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                                         
                                         <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' data-id='$row[order_id]' onclick='confirmPay(this)'>Complete Payment</a>
                                         <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' data-id='$row[order_id]' onclick='openModal(this)' id='chicken'>Add Chicken</a>
-                                        <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/bubble/pointofsale/view_receipt_home.php?order_id=$row[order_id]' id='viewRec'>View Receipt</a>
+                                        <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/pointofsale/view_receipt_home.php?order_id=$row[order_id]' id='viewRec'>View Receipt</a>
                                         
                                         </td>
                                     </tr>
@@ -880,7 +861,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                                         <td id='right'>
                                         
                                         <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' data-id='$row[order_id]' onclick='confirmDel(this)'>Complete Order</a>
-                                        <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/bubble/pointofsale/view_receipt_home.php?order_id=$row[order_id]'id='viewRec'>View Receipt</a>
+                                        <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/pointofsale/view_receipt_home.php?order_id=$row[order_id]'id='viewRec'>View Receipt</a>
                                         
                                         </td>
                                     </tr>
@@ -898,7 +879,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                                         
                                         
                                         <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' data-id='$row[order_id]' onclick='confirmPay(this)'>Complete Payment</a>
-                                        <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/bubble/pointofsale/view_receipt_home.php?order_id=$row[order_id]'id='viewRec'>View Receipt</a>
+                                        <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/pointofsale/view_receipt_home.php?order_id=$row[order_id]'id='viewRec'>View Receipt</a>
                                         
                                         </td>
                                     </tr>
@@ -929,7 +910,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                                     
                                     <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' data-id='$row[order_id]' onclick='confirmDel(this)'>Complete Order</a>
                                    
-                                    <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/bubble/pointofsale/view_receipt_home.php?order_id=$row[order_id]' id='viewRec'>View Receipt</a>
+                                    <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/pointofsale/view_receipt_home.php?order_id=$row[order_id]' id='viewRec'>View Receipt</a>
                                     
                                     </td>
                                 </tr>
@@ -944,7 +925,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                                     <td>{$row['status']}</td>
                                     <td id='right'>
                                    
-                                    <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/bubble/pointofsale/view_receipt_home.php?order_id=$row[order_id]' id='viewRec'>View Receipt</a>
+                                    <a class='btn-edita' style='display:inline-block; width:60px; height: 30px; font-size: 10px;' href='/pointofsale/view_receipt_home.php?order_id=$row[order_id]' id='viewRec'>View Receipt</a>
                                     
                                     </td>
                                 </tr>
@@ -983,18 +964,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                 </thead>
                 <tbody>
                   <?php
-                  $servername = "localhost";
-                  $username = "root";
-                  $password = "";
-                  $database = "bh";
-
-
-                  $connection = new mysqli($servername, $username, $password, $database);
-
-
-                  if ($connection->connect_error) {
-                    die("Connection failed: " . $connection->connect_error);
-                  }
+                  include "db_conn.php"; $connection = $conn;
 
 
                   $sql_returned_goods = " SELECT
@@ -1208,3 +1178,4 @@ async function refreshOnce() {
   header("Location: login.php");
   exit();
 }
+

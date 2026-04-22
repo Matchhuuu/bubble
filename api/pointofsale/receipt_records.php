@@ -10,10 +10,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <link rel="stylesheet" href="/bubble/interface/admin_homepage.css">
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/interface/admin_homepage.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
     
-    <link rel="icon" href=/bubble/media/BUBBLE.jpg></link>
+    <link rel="icon" href=/media/BUBBLE.jpg></link>
     <title>Receipt Records</title>
 </head>
 <script>
@@ -401,7 +401,7 @@ h1, h2, h3{
         <div class="navbar">
             <div style="position: relative; width: 20px; left: 30px; display: flex; align-items: center;"></div>
             <div class="buttons">
-                <form action="/bubble/interface/admin_homepage.php"><button type="submit" class="btn"> Back </button></form>
+                <form action="/interface/admin_homepage.php"><button type="submit" class="btn"> Back </button></form>
             </div>
             
         </div>
@@ -410,7 +410,7 @@ h1, h2, h3{
             <div class="dropdown">
                 <button onclick="myFunction()" class="dropbtn">Admin</button>
                 <div id="myDropdown" class="dropdown-content">
-                <a href="/bubble/interface/logout.php">Logout</a>
+                <a href="/interface/logout.php">Logout</a>
                 </div>
             </div>
             <div style="position: relative; width: 20px; right: 30px; display: flex; align-items: center;"></div>

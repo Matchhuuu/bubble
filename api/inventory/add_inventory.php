@@ -1,14 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bh";
-
-$connection = new mysqli($servername, $username, $password, $database);
-
-if ($connection->connect_error) {
-    die("Connection failed: " . $connection->connect_error);
-}
+include "db_conn.php"; $connection = $conn;
 
 $errorMessage = "";
 $productDetails = [];
@@ -374,17 +365,17 @@ h1, h2, h3{
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href=/bubble/media/BUBBLE.jpg></link>
+    <link rel="icon" href=/media/BUBBLE.jpg></link>
     <title>Add Stocks</title>
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div class="navbar">
         <div style="position: relative; width: 20px; left: 30px; display: flex; align-items: center;"></div>
         <div class="buttons">
-            <form action="/bubble/inventory/needed_inventory.php"><button type="submit" class="btn"> Back </button></form>
-            <form action="/bubble/inventory/add_stock_history.php"><button type="submit" class="btn"> Stock History </button></form>
+            <form action="/inventory/needed_inventory.php"><button type="submit" class="btn"> Back </button></form>
+            <form action="/inventory/add_stock_history.php"><button type="submit" class="btn"> Stock History </button></form>
         </div>
         
     </div>
@@ -393,7 +384,7 @@ h1, h2, h3{
         <div class="dropdown">
             <button onclick="myFunction()" class="dropbtn">Admin</button>
             <div id="myDropdown" class="dropdown-content">
-                <a href="/bubble/interface/logout.php">Logout</a>
+                <a href="/interface/logout.php">Logout</a>
             </div>
         </div>
         <div style="position: relative; width: 20px; right: 30px; display: flex; align-items: center;"></div>
@@ -473,3 +464,4 @@ h1, h2, h3{
 </div>
 </body>
 </html>
+

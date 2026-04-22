@@ -1,16 +1,6 @@
 <?php
-// Database connection details
-$host = 'localhost';
-$dbname = 'bh';  
-$user = 'root';
-$pass = ''; 
+include "db_conn.php";
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 // Get the submitted star rating
 $rating = isset($_POST['rating']) ? intval($_POST['rating']) : 0;

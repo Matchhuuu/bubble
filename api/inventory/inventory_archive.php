@@ -3,16 +3,7 @@
 session_start();
 
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "bh";
-
-$connection = new mysqli($servername, $username, $password, $database);
-
-if ($connection->connect_error) {
-    die("Connection failed: " . $connection->connect_error);
-}
+include "db_conn.php"; $connection = $conn;
 
 // ============================================================================
 // ============================================================================
@@ -363,7 +354,7 @@ if ($units_result) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
     <title>Inventory Archive</title>
     <style>
         * {
@@ -900,3 +891,4 @@ if ($units_result) {
     </script>
 </body>
 </html>
+

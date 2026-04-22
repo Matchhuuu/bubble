@@ -24,9 +24,9 @@ if(isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
 
-    <link rel="icon" href="/bubble/media/BUBBLE.jpg"> </link>
+    <link rel="icon" href="/media/BUBBLE.jpg"> </link>
     
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
 
         <title>Admin Interface</title>
     </head>
@@ -411,8 +411,8 @@ if(isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
         <div class="navbar">
             <div style="position: relative; width: 20px; left: 30px; display: flex; align-items: center;"></div>
             <div class="buttons">
-                <form action="/bubble/interface/user_accounts.php"><button type="submit" class="btn"> User Accounts </button></form>
-                <form action="/bubble/interface/login_records.php"><button type="submit" class="btn"> Login History </button></form>
+                <form action="/interface/user_accounts.php"><button type="submit" class="btn"> User Accounts </button></form>
+                <form action="/interface/login_records.php"><button type="submit" class="btn"> Login History </button></form>
                 
             </div>
             
@@ -437,7 +437,7 @@ if(isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
         <div class="flex-container">
    
                 <div class="item1">
-                    <div class="logo"><img src="/bubble/media/BUBBLE.jpg" width="500px"></div>
+                    <div class="logo"><img src="/media/BUBBLE.jpg" width="500px"></div>
                 </div>
 
                 <div class="item2">
@@ -446,9 +446,9 @@ if(isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                         <div class="title">
                             <h4>Menu and Order Management</h4>
                         </div>
-                        <form action="/bubble/pointofsale/food2.php"><button type="submit" class="btn1"> Item List </button></form>
-                        <form action="/bubble/pointofsale/new_receipt_records.php"><button type="submit" class="btn1"> Order Records </button></form>
-                        <form action="/bubble/pointofsale/sales.php"><button type="submit" class="btn1"> Sale Records </button></form>
+                        <form action="/pointofsale/food2.php"><button type="submit" class="btn1"> Item List </button></form>
+                        <form action="/pointofsale/new_receipt_records.php"><button type="submit" class="btn1"> Order Records </button></form>
+                        <form action="/pointofsale/sales.php"><button type="submit" class="btn1"> Sale Records </button></form>
                         </center>
                     </div>
                 </div>
@@ -458,15 +458,15 @@ if(isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                         <div class="title">
                             <h4>Inventory Management</h4>
                         </div>
-                        <form action="/bubble/inventory/summary.php"><button type="submit" class="btn1"> Inventory Summary</button></form>
+                        <form action="/inventory/summary.php"><button type="submit" class="btn1"> Inventory Summary</button></form>
 
-                        <form action="/bubble/inventory/needed_inventory.php">
+                        <form action="/inventory/needed_inventory.php">
                             <button type="submit" class="btn-notif"> Stocks to Order 
                                 <div class = "notif" id = "notif"></div> 
                             </button>                
                         </form>
 
-                        <form action="/bubble/inventory/current_inventory.php">
+                        <form action="/inventory/current_inventory.php">
                             <button type="submit" class="btn-notifa"> Current Stocks
                                 <div class = "notif2" id = "notif2"></div> 
                             </button>

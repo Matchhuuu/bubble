@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli("localhost", "root", "", "bh");
+include "db_conn.php";
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -67,8 +67,8 @@ $orders = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order History - Bubble Hideout POS</title>
-    <link rel="icon" href=/bubble/media/BUBBLE.jpg></link>
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="icon" href=/media/BUBBLE.jpg></link>
+    <link rel="stylesheet" href="/fonts/fonts.css">
     <style>
         :root {
             --primary-color: #4caf50;
@@ -540,7 +540,7 @@ h1, h2, h3{
 </head>
 <body>
     <div class="nav-header">
-        <a href="/bubble/pointofsale/new_receipt_records.php" class="back-button">← Back</a>
+        <a href="/pointofsale/new_receipt_records.php" class="back-button">← Back</a>
     </div>
     
     <div class="container">

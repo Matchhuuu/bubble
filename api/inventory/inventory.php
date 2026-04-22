@@ -3,15 +3,8 @@ session_start();
 
 if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) { 
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "bh";
+    include "db_conn.php";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    if ($conn->connect_error) {
-        die("Database connection failed: " . $conn->connect_error);
-    }
 
     $foods = [];
     $drinks = [];
@@ -67,12 +60,12 @@ while ($row = $itemResult->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href=/bubble/media/BUBBLE.jpg></link>
-    <link rel="stylesheet" href="/bubble/interface/homepage.css">
+    <link rel="icon" href=/media/BUBBLE.jpg></link>
+    <link rel="stylesheet" href="/interface/homepage.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Inventory Summary</title>
     
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css">
+    <link rel="stylesheet" href="/fonts/fonts.css">
     <style>
          .navbar {
             background-color: #7e5832;
@@ -199,7 +192,7 @@ while ($row = $itemResult->fetch_assoc()) {
     <div class="navbar">
     <div style="position: relative; width: 20px; left: 30px; display: flex; align-items: center;"></div>
         <div class="buttons">
-            <form action="/bubble/inventory/current_inventory.php">
+            <form action="/inventory/current_inventory.php">
                 <button type="submit" class="btn"> Back </button>
             </form>
         </div>

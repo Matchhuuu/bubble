@@ -8,9 +8,9 @@ if(isset($_SESSION['ACC_ID'])  && isset($_SESSION['EMAIL'])){ ?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href=/bubble/media/BUBBLE.jpg></link>
+    <link rel="icon" href=/media/BUBBLE.jpg></link>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/bubble/fonts/fonts.css"></link>
+    <link rel="stylesheet" href="/fonts/fonts.css"></link>
     <title>Item List</title>
 </head>
 
@@ -216,7 +216,7 @@ function myFunction() {
     <div class="navbar">
         <div style="position: relative; width: 20px; left: 30px; display: flex; align-items: center;"></div>
         <div class="buttons">
-            <form action="/bubble/interface/admin_homepage.php"><button type="submit" class="btn"> Back </button></form>
+            <form action="/interface/admin_homepage.php"><button type="submit" class="btn"> Back </button></form>
         </div>
         
     </div>
@@ -225,7 +225,7 @@ function myFunction() {
         <div class="dropdown">
             <button onclick="myFunction()" class="dropbtn">Admin</button>
             <div id="myDropdown" class="dropdown-content">
-                <a href="/bubble/interface/logout.php">Logout</a>
+                <a href="/interface/logout.php">Logout</a>
             </div>
         </div>
         <div style="position: relative; width: 20px; right: 30px; display: flex; align-items: center;"></div>
@@ -234,13 +234,13 @@ function myFunction() {
 
     <div class="menu">
         <div class="left-img">
-            <div class="logo"><img src="/bubble/media/BUBBLE.jpg" width="400px"></div>
+            <div class="logo"><img src="/media/BUBBLE.jpg" width="400px"></div>
         </div>
 
         <div class="right-button">
-            <form action="/bubble/pointofsale/drinks.php"><button type="submit" class="btn-main">Drinks</button></form>
-            <form action="/bubble/pointofsale/food.php"><button type="submit" class="btn-main">Food Items</button></form>
-            <form action="/bubble/pointofsale/addons.php"><button type="submit" class="btn-main">Add Ons</button></form>
+            <form action="/pointofsale/drinks.php"><button type="submit" class="btn-main">Drinks</button></form>
+            <form action="/pointofsale/food.php"><button type="submit" class="btn-main">Food Items</button></form>
+            <form action="/pointofsale/addons.php"><button type="submit" class="btn-main">Add Ons</button></form>
         </div>
     </div>
 
