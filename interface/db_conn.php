@@ -1,14 +1,16 @@
 <?php
-$sname = "localhost";
-$unmae = "root";
-$password = "";
-$db_name = "bh";
+$sname = "mysql-20229225-binssente-18bc.h.aivencloud.com";
+$unmae = "avnadmin";
+$password = getenv('DB_PASSWORD');
+$db_name = "defaultdb";
+$port = "13029";
 
-$conn = mysqli_connect($sname, $unmae, $password, $db_name);
+$ca_cert = __DIR__ . '/../ca.pem';
 
-if (!$conn) {
+$conn = mysqli_init();
+mysqli_ssl_set($conn, NULL, NULL, $ca_cert, NULL, NULL);
+
+if (!mysqli_real_connect($conn, $sname, $unmae, $password, $db_name, $port)) {
     die("❌ Connection Failed: " . mysqli_connect_error());
-} else {
-    echo "";
 }
 ?>
