@@ -1,0 +1,18 @@
+@font-face {
+    font-family: Poppins;
+    src: url(Poppins-Regular.ttf);
+  }
+
+@font-face {
+    font-family: BoldFont;
+    src: url(Poppins-Regular.ttf);
+  }
+
+h1, h2, h3{
+    font-family: BoldFont;
+    font-weight: 900;
+}
+
+p, tr, td, a, label {
+    font-family: Poppins;
+}
