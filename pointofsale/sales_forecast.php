@@ -39,87 +39,59 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <link rel="stylesheet" href="/bubble/fonts/fonts.css">
         <style>
-            body {
-                margin-top: 5%;
-                display: flex;
-                gap: 20px;
-                padding: 20px;
-                background: #f5f5f5;
-            }
-
-            #left {
-                flex: 3;
-            }
-
-            #right {
-                flex: 1;
-                background: #fff;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-                overflow-y: auto;
-                max-height: 90vh;
-            }
-
-            canvas {
-                background: #fff;
-                padding: 10px;
-                border-radius: 10px;
-                box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            }
-
-            input,
-            select {
-                width: 100%;
-                padding: 10px;
-                margin-top: 10px;
+            * {
+                margin: 0;
+                padding: 0;
                 box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                min-height: 100vh;
+                padding-top: 80px;
             }
 
             .navbar {
                 background-color: #7e5832;
                 width: 100%;
                 height: 80px;
-                position: absolute;
+                position: fixed;
                 top: 0;
                 left: 0;
-                z-index: 10;
+                z-index: 100;
                 box-shadow: 0px 5px 11px 1px rgba(0, 0, 0, 0.28);
-                display: flex;
-                justify-content: left;
-            }
-
-            .navbar-right {
-                width: 50%;
-                height: 80px;
-                position: absolute;
-                top: 0;
-                right: 0;
-                z-index: 11;
-                display: flex;
-                justify-content: right;
-            }
-
-            .buttons {
-                position: relative;
-                width: 330px;
-                left: 30px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                padding: 0 40px;
+            }
+
+            .navbar-left {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .navbar-right {
+                display: flex;
+                align-items: center;
+                gap: 20px;
             }
 
             .btn {
-                font-family: Poppins;
+                font-family: 'Poppins', sans-serif;
                 font-weight: bold;
                 color: #f0f0f0;
-                box-shadow: 3px 4px 11px 1px rgba(0, 0, 0, 0.28);
                 height: 40px;
-                width: 150px;
+                padding: 0 24px;
                 background-color: #337609;
                 border: none;
                 border-radius: 25px;
+                cursor: pointer;
                 transition: 0.5s;
+                font-size: 14px;
+                box-shadow: 3px 4px 11px 1px rgba(0, 0, 0, 0.28);
             }
 
             .btn:hover {
@@ -132,7 +104,6 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                 color: #f0f0f0;
                 padding: 16px;
                 font-size: 16px;
-                min-width: 110px;
                 border: none;
                 cursor: pointer;
                 font-family: Poppins;
@@ -145,66 +116,163 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
 
             .dropdown {
                 position: relative;
-                width: 490px;
-                display: flex;
-                justify-content: right;
             }
 
             .dropdown-content {
                 display: none;
                 position: absolute;
-                background-color: #f1f1f1;
-                min-width: 110px;
-                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                background: white;
+                min-width: 150px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
                 z-index: 1;
-                top: 80px;
-                border-bottom-left-radius: 5px;
-                border-bottom-right-radius: 5px;
+                top: 100%;
+                right: 0;
+                border-radius: 12px;
+                margin-top: 8px;
+                overflow: hidden;
             }
 
             .dropdown-content a {
-                color: black;
-                padding: 12px 16px;
+                color: #333;
+                padding: 14px 20px;
                 text-decoration: none;
                 display: block;
+                font-family: 'Poppins', sans-serif;
+                font-size: 14px;
+                transition: all 0.2s ease;
             }
 
             .dropdown-content a:hover {
-                background-color: #ddd;
-                border-bottom-left-radius: 5px;
-                border-bottom-right-radius: 5px;
+                background: #f0f0f0;
+                color: #667eea;
             }
 
             .show {
+                display: block !important;
+            }
+
+            .container {
+                display: flex;
+                gap: 24px;
+                padding: 30px 40px;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+
+            #left {
+                flex: 1;
+                min-width: 0;
+            }
+
+            #right {
+                width: 380px;
+                background: white;
+                padding: 28px;
+                border-radius: 16px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+                overflow-y: auto;
+                max-height: calc(100vh - 140px);
+            }
+
+            h2 {
+                color: #2d3748;
+                font-size: 28px;
+                margin-bottom: 24px;
+                font-weight: 700;
+            }
+
+            h4 {
+                color: #2d3748;
+                font-size: 14px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin-bottom: 16px;
+                margin-top: 24px;
+            }
+
+            h4:first-child {
+                margin-top: 0;
+            }
+
+            label {
                 display: block;
+                color: #4a5568;
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 8px;
+                text-transform: uppercase;
+                letter-spacing: 0.3px;
+            }
+
+            canvas {
+                background: white;
+                padding: 20px;
+                border-radius: 16px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+                margin-bottom: 24px;
+            }
+
+            input,
+            select {
+                width: 100%;
+                padding: 12px 14px;
+                margin-top: 8px;
+                margin-bottom: 16px;
+                box-sizing: border-box;
+                font-family: 'Poppins', sans-serif;
+                border: 2px solid #e2e8f0;
+                border-radius: 10px;
+                font-size: 14px;
+                transition: all 0.3s ease;
+                color: #2d3748;
+            }
+
+            input:focus,
+            select:focus {
+                outline: none;
+                border-color: #667eea;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
             }
 
             .summary-boxes {
-                display: flex;
-                justify-content: space-around;
-                margin-bottom: 20px;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+                margin-bottom: 28px;
             }
 
             .summary-boxes .box {
-                flex: 1;
-                margin: 0 10px;
-                background: #fff;
-                border-radius: 12px;
-                padding: 20px;
+                background: white;
+                border-radius: 16px;
+                padding: 24px;
                 text-align: center;
-                box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+                border-left: 5px solid #667eea;
+                transition: all 0.3s ease;
+            }
+
+            .summary-boxes .box:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+            }
+
+            .summary-boxes .daily {
+                border-left-color: green;
+            }
+
+            .summary-boxes .weekly {
+                border-left-color: blue;
+            }
+
+            .summary-boxes .monthly {
+                border-left-color: orange;
             }
 
             .summary-boxes .box h2 {
-                font-size: 24px;
-                margin: 0;
-                font-weight: bold;
-            }
-
-            .summary-boxes .box p {
-                margin: 5px 0 0;
-                font-size: 14px;
-                color: #555;
+                font-size: 26px;
+                margin: 0 0 8px;
+                margin-bottom: 8px;
             }
 
             .summary-boxes .daily h2 {
@@ -219,150 +287,243 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                 color: orange;
             }
 
+            .summary-boxes .box p {
+                margin: 0;
+                font-size: 12px;
+                color: #718096;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.3px;
+            }
 
             .date-container {
                 display: flex;
-                gap: 10px;
+                gap: 12px;
+                flex-wrap: wrap;
             }
 
             .date-group {
-                width: 50%;
+                flex: 1;
+                min-width: 120px;
             }
 
             .date-group1 {
-                width: auto;
-            }
-
-            .container1 {
-                min-height: 80vh;
-                /* full screen height */
-                display: flex;
-                flex-direction: column;
+                width: 100%;
             }
 
             .chart-buttons {
                 display: flex;
-                justify-content: left;
-                gap: 10px;
-                margin-top: 20px;
-                margin-bottom: 10px;
+                gap: 8px;
+                margin: 16px 0;
+                flex-wrap: wrap;
             }
 
             .chart-toggle {
-                padding: 8px 14px;
-                background-color: #4CAF50;
-                color: white;
+                flex: 1;
+                min-width: 120px;
+                padding: 12px 16px;
+                background-color: #e0e0e0;
+                color: #555;
                 border: none;
                 border-radius: 20px;
-                font-family: Poppins;
+                font-family: 'Poppins', sans-serif;
                 font-weight: 600;
+                font-size: 13px;
                 cursor: pointer;
                 box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.2);
                 transition: background-color 0.3s;
+                text-transform: none;
+                letter-spacing: 0px;
             }
 
             .chart-toggle:hover {
-                background-color: #3e8e41;
+                background-color: #d0d0d0;
+                transition: background-color 0.3s;
             }
 
             .chart-toggle.active {
-                background-color: #2e7030;
+                background-color: #4CAF50;
+                color: white;
+                box-shadow: 2px 3px 8px rgba(76, 175, 80, 0.3);
+            }
+
+            .primary-btn {
+                width: 100%;
+                padding: 14px;
+                margin-top: 16px;
+                font-family: 'Poppins', sans-serif;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 10px;
+                font-weight: 600;
+                font-size: 14px;
+                cursor: pointer;
+                box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.2);
+                transition: background-color 0.3s;
+                text-transform: none;
+                letter-spacing: 0px;
+            }
+
+            .primary-btn:hover {
+                background-color: #3e8e41;
+                transition: background-color 0.3s;
+            }
+
+            .secondary-btn {
+                width: 100%;
+                padding: 14px;
+                margin-top: 10px;
+                font-family: 'Poppins', sans-serif;
+                background: white;
+                color: #667eea;
+                border: 2px solid #667eea;
+                border-radius: 10px;
+                font-weight: 600;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .secondary-btn:hover {
+                background: #667eea;
+                color: white;
+                transform: translateY(-2px);
+            }
+
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 10px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: #cbd5e0;
+                border-radius: 10px;
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #a0aec0;
+            }
+
+            @media (max-width: 1024px) {
+                .container {
+                    flex-direction: column;
+                    gap: 20px;
+                    padding: 20px;
+                }
+
+                #right {
+                    width: 100%;
+                    max-height: none;
+                }
+
+                .summary-boxes {
+                    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                }
+
+                .navbar {
+                    padding: 0 20px;
+                    height: 70px;
+                }
+
+                body {
+                    padding-top: 70px;
+                }
+
+                .chart-buttons {
+                    flex-direction: column;
+                }
+
+                .chart-toggle {
+                    min-width: auto;
+                    width: 100%;
+                }
             }
         </style>
     </head>
 
     <body>
         <div class="navbar">
-            <div style="position: relative; width: 20px; left: 30px; display: flex; align-items: center;"></div>
-            <div class="buttons">
-                <form action="/bubble/interface/admin_homepage.php">
-                    <button type="submit" class="btn"> Back </button>
+            <div class="navbar-left">
+                <form action="/bubble/interface/admin_homepage.php" style="margin: 0;">
+                    <button type="submit" class="btn">← Back</button>
                 </form>
             </div>
-        </div>
-        <div class="navbar-right">
-            <div class="dropdown">
-                <button onclick="toggleDropdown()" class="dropbtn">Admin</button>
-                <div id="myDropdown" class="dropdown-content">
-                    <a href="/bubble/interface/logout.php">Logout</a>
+            <div class="navbar-right">
+                <div class="dropdown">
+                    <button onclick="toggleDropdown()" class="dropbtn">Admin</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="/bubble/interface/logout.php">Logout</a>
+                    </div>
                 </div>
             </div>
-            <div style="position: relative; width: 20px; right: 30px; display: flex; align-items: center;"></div>
         </div>
 
-        <div id="left">
-            <h2>Sales Data</h2>
+        <div class="container">
+            <div id="left">
+                <h2>Sales Forecast Dashboard</h2>
 
-            <div id="salesSummary" class="summary-boxes">
-                <div class="box daily">
-                    <h2 id="dailyTotal">₱0</h2>
-                    <p>AVERAGE DAILY SALES</p>
+                <div id="salesSummary" class="summary-boxes">
+                    <div class="box daily">
+                        <h2 id="dailyTotal">₱0</h2>
+                        <p>Average Daily Sales</p>
+                    </div>
+                    <div class="box weekly">
+                        <h2 id="weeklyTotal">₱0</h2>
+                        <p>Average Weekly Sales</p>
+                    </div>
+                    <div class="box monthly">
+                        <h2 id="monthlyTotal">₱0</h2>
+                        <p>Average Monthly Sales</p>
+                    </div>
                 </div>
-                <div class="box weekly">
-                    <h2 id="weeklyTotal">₱0</h2>
-                    <p>AVERAGE WEEKLY SALES</p>
-                </div>
-                <div class="box monthly">
-                    <h2 id="monthlyTotal">₱0</h2>
-                    <p>AVERAGE MONTHLY SALES</p>
-                </div>
+
+                <canvas id="forecastChart" height="200"></canvas>
             </div>
 
-            <canvas id="forecastChart" height="100"></canvas>
-        </div>
+            <div id="right">
+                <h4>Forecast Settings</h4>
 
-        <div id="right" class="container1">
-            <div>
-                <h4 style="font-family: Poppins;">Filter by View</h4>
-                <label for="filterType">Select View:</label>
-                <select id="filterType" onchange="applyFilter()" style="font-family: Poppins;">
+                <label for="filterType">Select View</label>
+                <select id="filterType" onchange="applyFilter()">
                     <option value="daily">Daily</option>
                     <option value="weekly">Weekly</option>
                     <option value="monthly">Monthly</option>
                 </select>
-            </div>
-            
-            <div class="chart-buttons" style="margin-top: 10px;">
-                <button id="btnForecast" class="chart-toggle active">Forecast Daily</button>
-                
-                <button id="btnForecastWeekly" class="chart-toggle">Forecast Weekly</button>
-                
-                <button id="btnForecastMonthly" class="chart-toggle">Forecast Monthly</button>
-            </div>
 
-            <div class="date-container" id="dailyInputs">
-                <div class="date-group">
-                    <label for="startDate">Select Start Date</label>
-                    <input type="text" id="startDate" />
+                <h4 style="margin-top: 20px;">Forecast Type</h4>
+                <div class="chart-buttons">
+                    <button id="btnForecast" class="chart-toggle active">Daily</button>
+                    <button id="btnForecastWeekly" class="chart-toggle">Weekly</button>
+                    <button id="btnForecastMonthly" class="chart-toggle">Monthly</button>
                 </div>
 
-                <div class="date-group">
-                    <label for="endDate">Select End Date</label>
-                    <input type="text" id="endDate" />
-                </div>
+                <div id="dailyInputs">
+                    <label for="startDate">Start Date</label>
+                    <input type="text" id="startDate" placeholder="YYYY-MM-DD" />
 
-                <div class="date-group1">
+                    <label for="endDate">End Date</label>
+                    <input type="text" id="endDate" placeholder="YYYY-MM-DD" />
+
                     <label for="forecastDays">Days to Forecast</label>
-                    <input style="font-family: Poppins;" type="number" id="forecastDays" min="1" max="14"
-                        placeholder="e.g. 3">
+                    <input type="number" id="forecastDays" min="1" max="14" placeholder="e.g., 3">
                 </div>
-            </div>
 
-            <div style="margin-top: 10px;">
-                <label for="forecastMethod" style="font-family: Poppins;">Forecast Method</label>
-                <select id="forecastMethod" style="font-family: Poppins; width: 100%; padding: 10px;">
+                <label for="forecastMethod">Forecast Method</label>
+                <select id="forecastMethod">
                     <option value="sma">Simple Moving Average (SMA)</option>
                     <option value="exponential">Exponential Smoothing (ES)</option>
                 </select>
-            </div>
 
-            <!-- Updated button to call appropriate forecast function based on active tab -->
-            <button
-                style="width: 100%;padding: 10px;margin-top: 10px;font-family: Poppins;background-color: #4CAF50;color: white;border: none;"
-                onclick="handleForecastClick()">Generate Forecast</button>
-            <button
-                style="width: 100%;padding: 10px;margin-top: 10px;font-family: Poppins;background-color: #4CAF50;color: white;border: none;"
-                onclick="showAllSales()">Show All Sales</button>
+                <button class="primary-btn" onclick="handleForecastClick()">Generate Forecast</button>
+                <button class="secondary-btn" onclick="showAllSales()">Show All Sales</button>
+            </div>
         </div>
 
         <script>
@@ -412,12 +573,12 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                 if (customInputsContainer) customInputsContainer.remove();
 
                 if (type === "daily") {
-                    dailyInputs.style.display = "flex";
+                    document.getElementById("dailyInputs").style.display = "block";
                 } else {
-                    dailyInputs.style.display = "none";
+                    document.getElementById("dailyInputs").style.display = "none";
                     customInputsContainer = document.createElement("div");
                     customInputsContainer.classList.add("date-container");
-                    customInputsContainer.style.marginTop = "10px";
+                    customInputsContainer.style.marginTop = "16px";
 
                     if (type === "weekly") {
                         customInputsContainer.innerHTML = `
@@ -431,7 +592,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                             </div>
                             <div class="date-group1">
                                 <label>Weeks to Forecast</label>
-                                <input type="number" id="forecastWeeks" min="1" max="8" placeholder="e.g. 2">
+                                <input type="number" id="forecastWeeks" min="1" max="8" placeholder="e.g., 2">
                             </div>
                         `;
                     } else if (type === "monthly") {
@@ -446,15 +607,15 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                             </div>
                             <div class="date-group1">
                                 <label>Months to Forecast</label>
-                                <input type="number" id="forecastMonths" min="1" max="6" placeholder="e.g. 2">
+                                <input type="number" id="forecastMonths" min="1" max="6" placeholder="e.g., 2">
                             </div>
                         `;
                     }
-                    const chartButtonsDiv = document.querySelector('.chart-buttons');
-                    if (chartButtonsDiv) {
-                        chartButtonsDiv.parentNode.insertBefore(customInputsContainer, chartButtonsDiv.nextSibling);
+                    const forecastMethod = document.querySelector('[for="forecastMethod"]');
+                    if (forecastMethod) {
+                        forecastMethod.parentNode.insertBefore(customInputsContainer, forecastMethod);
                     } else {
-                        document.getElementById("right").appendChild(customInputsContainer);
+                        document.getElementById("right").insertBefore(customInputsContainer, document.getElementById("right").lastElementChild);
                     }
                 }
             }
@@ -566,8 +727,8 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                 const finalValues = [...values, ...forecasted];
 
                 const pointBackgroundColors = [
-                    ...values.map(() => '#4CAF50'), // Green for actual data
-                    ...forecasted.map(() => '#2196F3') // Blue for forecasted data
+                    ...values.map(() => '#10b981'),
+                    ...forecasted.map(() => '#667eea')
                 ];
 
                 if (chart) chart.destroy();
@@ -578,10 +739,10 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                         datasets: [{
                             label: `${type} ${method === 'sma' ? 'SMA' : 'Exponential'} Forecast`,
                             data: finalValues,
-                            borderColor: method === 'sma' ? 'green' : 'blue',
-                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.3,
+                            borderColor: method === 'sma' ? '#10b981' : '#667eea',
+                            backgroundColor: method === 'sma' ? 'rgba(16, 185, 129, 0.05)' : 'rgba(102, 126, 234, 0.05)',
+                            borderWidth: 3,
+                            tension: 0.4,
                             pointRadius: 5,
                             pointBackgroundColor: pointBackgroundColors,
                             pointBorderColor: pointBackgroundColors,
@@ -591,27 +752,28 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                     },
                     options: {
                         plugins: {
-                            title: { display: true, text: `${type} Forecast (${steps} ${type === "Weekly" ? "Weeks" : "Months"})` },
+                            title: { display: true, text: `${type} Forecast (${steps} ${type === "Weekly" ? "Weeks" : "Months"})`, font: { size: 16, weight: 'bold' }, color: '#2d3748' },
                             datalabels: {
                                 anchor: 'end',
                                 align: 'top',
                                 color: '#000',
-                                font: { weight: 'bold', size: 12 },
+                                font: { weight: 'bold', size: 11 },
                                 formatter: (v, context) => {
                                     const isActual = context.dataIndex < values.length;
-                                    return `₱${v.toFixed(2)}`;
+                                    return `₱${v.toFixed(0)}`;
                                 },
                                 backgroundColor: (context) => {
                                     const isActual = context.dataIndex < values.length;
-                                    return isActual ? '#4CAF50' : '#2196F3';
+                                    return isActual ? '#10b981' : '#667eea';
                                 },
                                 color: '#fff',
                                 borderRadius: 4,
                                 padding: 4
                             }
                         },
-                        scales: { y: { beginAtZero: true } },
-                        responsive: true
+                        scales: { y: { beginAtZero: true, ticks: { color: '#718096' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } }, x: { ticks: { color: '#718096' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } } },
+                        responsive: true,
+                        maintainAspectRatio: true
                     },
                     plugins: [ChartDataLabels]
                 });
@@ -689,8 +851,9 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                         datasets: [{
                             label: `Sales + ${forecastDays}-Day ${method === 'sma' ? 'SMA' : 'Exponential'} Forecast`,
                             data: combinedSales,
-                            borderColor: method === 'sma' ? 'green' : 'blue',
-                            borderWidth: 2,
+                            borderColor: method === 'sma' ? '#10b981' : '#667eea',
+                            backgroundColor: method === 'sma' ? 'rgba(16, 185, 129, 0.05)' : 'rgba(102, 126, 234, 0.05)',
+                            borderWidth: 3,
                             pointRadius: 4,
                             tension: 0.4,
                             spanGaps: true,
@@ -704,17 +867,19 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                         plugins: {
                             title: {
                                 display: true,
-                                text: `${method === 'sma' ? 'Recursive SMA' : 'Exponential Smoothing'} Forecast (${forecastDays} Days) from ${end}`
+                                text: `${method === 'sma' ? 'Recursive SMA' : 'Exponential Smoothing'} Forecast (${forecastDays} Days) from ${end}`,
+                                font: { size: 16, weight: 'bold' },
+                                color: '#2d3748'
                             },
                             datalabels: {
                                 anchor: 'end',
                                 align: 'top',
                                 color: '#000',
-                                font: { weight: 'bold', size: 12 },
-                                formatter: (value) => `${value}`
+                                font: { weight: 'bold', size: 11 },
+                                formatter: (value) => `₱${value.toFixed(0)}`
                             }
                         },
-                        scales: { y: { beginAtZero: true } }
+                        scales: { y: { beginAtZero: true, ticks: { color: '#718096' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } }, x: { ticks: { color: '#718096' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } } }
                     },
                     plugins: [ChartDataLabels]
                 });
@@ -785,12 +950,12 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                         datasets: [{
                             label: `Sales (${filterType})`,
                             data: groupedSales,
-                            borderColor: 'orange',
-                            backgroundColor: 'rgba(255,165,0,0.2)',
-                            borderWidth: 2,
+                            borderColor: '#f59e0b',
+                            backgroundColor: 'rgba(245, 158, 11, 0.05)',
+                            borderWidth: 3,
                             pointRadius: 4,
-                            tension: 0.2,
-                            pointBackgroundColor: 'orange'
+                            tension: 0.4,
+                            pointBackgroundColor: '#f59e0b'
                         }]
                     },
                     options: {
@@ -798,16 +963,19 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                         plugins: {
                             title: {
                                 display: true,
-                                text: `Sales Data (${filterType.charAt(0).toUpperCase() + filterType.slice(1)})`
+                                text: `Sales Data (${filterType.charAt(0).toUpperCase() + filterType.slice(1)})`,
+                                font: { size: 16, weight: 'bold' },
+                                color: '#2d3748'
                             },
                             datalabels: {
                                 anchor: 'end',
                                 align: 'top',
                                 color: '#000',
-                                font: { weight: 'bold', size: 12 },
-                                formatter: (value) => value.toLocaleString()
+                                font: { weight: 'bold', size: 11 },
+                                formatter: (value) => `₱${value.toLocaleString()}`
                             }
-                        }
+                        },
+                        scales: { y: { beginAtZero: true, ticks: { color: '#718096' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } }, x: { ticks: { color: '#718096' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } } }
                     },
                     plugins: [ChartDataLabels]
                 });
@@ -822,24 +990,27 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                         datasets: [{
                             label: 'All Sales',
                             data: originalSales,
-                            borderColor: 'green',
-                            borderWidth: 2,
-                            pointRadius: 2,
-                            tension: 0.4
+                            borderColor: '#667eea',
+                            backgroundColor: 'rgba(102, 126, 234, 0.05)',
+                            borderWidth: 3,
+                            pointRadius: 3,
+                            tension: 0.4,
+                            pointBackgroundColor: '#667eea'
                         }]
                     },
                     options: {
                         responsive: true,
                         plugins: {
-                            title: { display: true, text: "All Sales Over Time" },
+                            title: { display: true, text: "All Sales Over Time", font: { size: 16, weight: 'bold' }, color: '#2d3748' },
                             datalabels: {
                                 anchor: 'end',
                                 align: 'top',
                                 color: '#000',
-                                font: { weight: 'bold', size: 12 },
-                                formatter: (value) => `₱${value.toFixed(2)}`
+                                font: { weight: 'bold', size: 10 },
+                                formatter: (value) => `₱${value.toFixed(0)}`
                             }
-                        }
+                        },
+                        scales: { y: { beginAtZero: true, ticks: { color: '#718096' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } }, x: { ticks: { color: '#718096' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } } }
                     },
                     plugins: [ChartDataLabels]
                 });
@@ -895,7 +1066,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
                     String(dayElem.dateObj.getDate()).padStart(2, "0");
 
                 if (originalDates.includes(localDate)) {
-                    dayElem.style.backgroundColor = "#4CAF50";
+                    dayElem.style.backgroundColor = "#667eea";
                     dayElem.style.color = "#fff";
                     dayElem.style.borderRadius = "50%";
                     dayElem.style.width = "32px";
