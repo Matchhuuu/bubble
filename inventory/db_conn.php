@@ -1,11 +1,10 @@
 <?php
 $sname = "mysql-20229225-binssente-18bc.h.aivencloud.com";
 $unmae = "avnadmin";
-$password = getenv('DB_PASSWORD'); 
+$password = getenv('DB_PASSWORD');
 $db_name = "defaultdb";
 $port = "13029";
 
-// Path to the CA certificate (make sure it's named ca.pem in your root folder)
 $ca_cert = __DIR__ . '/../ca.pem';
 
 $conn = mysqli_init();

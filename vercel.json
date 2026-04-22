@@ -1,8 +1,15 @@
 {
   "version": 2,
   "functions": {
-    "**/*.php": {
+    "api/**/*.php": {
       "runtime": "vercel-php@0.6.1"
     }
-  }
+  },
+  "routes": [
+    { "src": "/interface/(.*)", "dest": "/api/interface/$1" },
+    { "src": "/inventory/(.*)", "dest": "/api/inventory/$1" },
+    { "src": "/pointofsale/(.*)", "dest": "/api/pointofsale/$1" },
+    { "src": "/index.php", "dest": "/api/index.php" },
+    { "src": "/", "dest": "/api/index.php" }
+  ]
 }
