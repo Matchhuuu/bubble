@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . '/api/session_handler.php';
 include "db_conn.php";
 
 if (isset($_POST['password'])) {

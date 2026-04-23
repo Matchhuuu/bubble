@@ -1,6 +1,6 @@
 <?php
 // Start session at the very beginning, before any output
-session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . '/api/session_handler.php';
 
 // Database connection
 include "db_conn.php"; $connection = $conn;

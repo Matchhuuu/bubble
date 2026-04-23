@@ -77,7 +77,7 @@ if (!isset($_GET['code']) && !isset($_POST['provider'])) {
 
 require 'vendor/autoload.php';
 
-session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . '/api/session_handler.php';
 
 $providerName = '';
 $clientId = '';

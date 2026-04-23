@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . '/api/session_handler.php';
 include "db_conn.php"; $connection = $conn;
 
 $sql = "SELECT * FROM acc_archive";

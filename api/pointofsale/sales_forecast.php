@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . '/api/session_handler.php';
 
 if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
     include "db_conn.php";
