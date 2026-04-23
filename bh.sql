@@ -119,7 +119,7 @@ CREATE TABLE `customer_orders` (
   `discount_type` varchar(50) DEFAULT NULL,
   `amount_paid` decimal(10,2) NOT NULL,
   `status` enum('Pending','Confirmed','Preparing','Order Ready','Completed','cancelled') DEFAULT 'Pending',
-  `created_at` timestamp NULL DEFAULT convert_tz(current_timestamp(),@@session.time_zone,'+08:00'),
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -492,7 +492,7 @@ CREATE TABLE `customer_order_items` (
   `sinkers` text DEFAULT NULL,
   `base` varchar(100) DEFAULT NULL,
   `refills` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT convert_tz(current_timestamp(),@@session.time_zone,'+08:00')
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2628,7 +2628,7 @@ CREATE TABLE `unified_inventory` (
   `current_quantity` decimal(10,0) NOT NULL DEFAULT 0,
   `cost_per_unit` decimal(10,2) NOT NULL,
   `supplier_info` varchar(255) DEFAULT NULL,
-  `last_updated` timestamp NULL DEFAULT convert_tz(current_timestamp(),@@session.time_zone,'+08:00'),
+  `last_updated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `expiration_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
