@@ -117,7 +117,7 @@ CREATE TABLE `customer_orders` (
   `total` decimal(10,2) NOT NULL,
   `discount` decimal(10,2) NOT NULL,
   `discount_type` varchar(50) DEFAULT NULL,
-  `amount_paid` decimal(10,2) NOT NULL,
+  `amount_paid` decimal(10,2) DEFAULT 0,
   `status` enum('Pending','Confirmed','Preparing','Order Ready','Completed','cancelled') DEFAULT 'Pending',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()

@@ -188,12 +188,16 @@ function addOrderRecord($orderId, $total, $discount, $amountPaid, $orderType, $d
             total DECIMAL(10,2) NOT NULL,
             discount DECIMAL(10,2) DEFAULT 0,
             discount_type VARCHAR(50) DEFAULT NULL,
-            amount_paid DECIMAL(10,2) NOT NULL,
+            amount_paid DECIMAL(10,2) DEFAULT 0,
             order_type ENUM('dine_in', 'takeout') NOT NULL DEFAULT 'dine_in',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ";
     $conn->query($createOrdersTable);
+    $columnCheck = $conn->query("SHOW COLUMNS FROM customer_orders LIKE 'amount_paid'");
+    if ($columnCheck && $columnCheck->num_rows > 0) {
+        $conn->query("ALTER TABLE customer_orders MODIFY amount_paid DECIMAL(10,2) DEFAULT 0");
+    }
 
     $checkColumn = $conn->query("SHOW COLUMNS FROM customer_orders LIKE 'discount_type'");
     if ($checkColumn->num_rows == 0) {
