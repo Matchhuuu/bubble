@@ -92,7 +92,7 @@ function getMenuPrice($menuItemId, $sizeId)
     return $row ? $row['price'] : 0;
 }
 
-function addCustomerOrderRecord($orderId, $orderType, $total, $status = 'pending')
+function addCustomerOrderRecord($orderId, $orderType, $total, $discount = 0, $status = 'pending')
 {
     global $conn;
     $conn->query("CREATE TABLE IF NOT EXISTS customer_orders (
@@ -100,15 +100,16 @@ function addCustomerOrderRecord($orderId, $orderType, $total, $status = 'pending
         order_id VARCHAR(50) UNIQUE NOT NULL,
         order_type ENUM('dine_in','takeout','delivery') NOT NULL,
         total DECIMAL(10,2) NOT NULL,
+        discount DECIMAL(10,2) DEFAULT 0,
         status ENUM('pending','confirmed','preparing','ready','completed','cancelled') DEFAULT 'pending',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )");
-    $stmt = $conn->prepare("INSERT INTO customer_orders (order_id, order_type, total, status) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO customer_orders (order_id, order_type, total, discount, status) VALUES (?, ?, ?, ?, ?)");
     if (!$stmt) {
         throw new Exception("Prepare failed: " . $conn->error);
     }
-    $stmt->bind_param("ssds", $orderId, $orderType, $total, $status);
+    $stmt->bind_param("ssdds", $orderId, $orderType, $total, $discount, $status);
     if (!$stmt->execute()) {
         throw new Exception("Failed to insert order: " . $stmt->error);
     }
@@ -272,7 +273,7 @@ if (isset($_POST['place_order'])) {
         $orderId = generateOrderId();
         $conn->begin_transaction();
         try {
-            addCustomerOrderRecord($orderId, $order_type, $total);
+            addCustomerOrderRecord($orderId, $order_type, $total, 0);
 
             foreach ($_SESSION['cart'] as $item) {
                 if (!checkStockAvailability($item['id'], $item['size'], $item['quantity'])) {
