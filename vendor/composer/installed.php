@@ -1,19 +1,19 @@
 <?php return array(
-    'u412787669_soshe' => array(
-        'name' => '__u412787669_soshe__',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+    'root' => array(
+        'name' => '__root__',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '8011acc97dd420559a05acd0fe08bd7e27b68615',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__u412787669_soshe__' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+        '__root__' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '8011acc97dd420559a05acd0fe08bd7e27b68615',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

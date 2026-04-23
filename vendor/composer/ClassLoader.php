@@ -172,7 +172,7 @@ class ClassLoader
      * appending or prepending to the ones previously set for this prefix.
      *
      * @param string              $prefix  The prefix
-     * @param list<string>|string $paths   The PSR-0 u412787669_soshe directories
+     * @param list<string>|string $paths   The PSR-0 root directories
      * @param bool                $prepend Whether to prepend the directories
      *
      * @return void
@@ -231,7 +231,7 @@ class ClassLoader
     {
         $paths = (array) $paths;
         if (!$prefix) {
-            // Register directories for the u412787669_soshe namespace.
+            // Register directories for the root namespace.
             if ($prepend) {
                 $this->fallbackDirsPsr4 = array_merge(
                     $paths,
