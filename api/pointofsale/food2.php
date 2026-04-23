@@ -192,7 +192,7 @@ function getMenuItems($conn, $section) {
             MIN(created_at) as created_at
         FROM unified_menu_system 
         WHERE section = ?
-        GROUP BY  menu_item_id, size_id
+        GROUP BY menu_item_id, menu_item_name, category, section, size_id, price, description, is_available
         ORDER BY menu_item_name, 
         CASE size_id 
             WHEN 'REG' THEN 1 
