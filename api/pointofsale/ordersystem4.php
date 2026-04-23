@@ -98,15 +98,17 @@ function addCustomerOrderRecord($orderId, $orderType, $total, $status = 'pending
         order_id VARCHAR(50) UNIQUE NOT NULL,
         order_type ENUM('dine_in','takeout','delivery') NOT NULL,
         total DECIMAL(10,2) NOT NULL,
+        amount_paid DECIMAL(10,2) DEFAULT 0,
         status ENUM('pending','confirmed','preparing','ready','completed','cancelled') DEFAULT 'pending',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )");
-    $stmt = $conn->prepare("INSERT INTO customer_orders (order_id, order_type, total, status) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO customer_orders (order_id, order_type, total, amount_paid, status) VALUES (?, ?, ?, ?, ?)");
     if (!$stmt) {
         throw new Exception("Prepare failed: " . $conn->error);
     }
-    $stmt->bind_param("ssds", $orderId, $orderType, $total, $status);
+    $amountPaid = 0;
+    $stmt->bind_param("ssdds", $orderId, $orderType, $total, $amountPaid, $status);
     if (!$stmt->execute()) {
         throw new Exception("Failed to insert order: " . $stmt->error);
     }
