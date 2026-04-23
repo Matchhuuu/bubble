@@ -103,6 +103,10 @@ function addCustomerOrderRecord($orderId, $orderType, $total, $status = 'pending
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )");
+    $columnCheck = $conn->query("SHOW COLUMNS FROM customer_orders LIKE 'amount_paid'");
+    if ($columnCheck && $columnCheck->num_rows === 0) {
+        $conn->query("ALTER TABLE customer_orders ADD COLUMN amount_paid DECIMAL(10,2) DEFAULT 0 AFTER total");
+    }
     $stmt = $conn->prepare("INSERT INTO customer_orders (order_id, order_type, total, amount_paid, status) VALUES (?, ?, ?, ?, ?)");
     if (!$stmt) {
         throw new Exception("Prepare failed: " . $conn->error);
