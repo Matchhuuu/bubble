@@ -111,6 +111,13 @@ function addCustomerOrderItemRecord($orderId, $menuItemId, $sizeId, $quantity, $
     ";
     $conn->query($createOrderItemsTable);
     
+    $columnCheck = $conn->query("SHOW COLUMNS FROM customer_order_items LIKE 'refills'");
+    if ($columnCheck && $columnCheck->num_rows === 0) {
+        $conn->query("ALTER TABLE customer_order_items ADD COLUMN refills INT DEFAULT 0 AFTER flavor");
+    } else {
+        $conn->query("ALTER TABLE customer_order_items MODIFY refills INT DEFAULT 0");
+    }
+    
     $stmt = $conn->prepare("INSERT INTO customer_order_items (order_id, menu_item_id, size_id, quantity, price, flavor) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sssiis", $orderId, $menuItemId, $sizeId, $quantity, $price, $flavor);
     $stmt->execute();
