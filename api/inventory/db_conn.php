@@ -14,4 +14,8 @@ mysqli_ssl_set($conn, NULL, NULL, $ca_cert, NULL, NULL);
 if (!mysqli_real_connect($conn, $sname, $unmae, $password, $db_name, $port)) {
     die("❌ Connection Failed: " . mysqli_connect_error());
 }
+
+// Disable ONLY_FULL_GROUP_BY for compatibility with legacy queries
+$conn->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+
 ?>
