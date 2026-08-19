@@ -5,7 +5,8 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
     public function open($savePath, $sessionName): bool {
         $sname = "mysql-35594af1-reapquizon-ff22.h.aivencloud.com";
         $unmae = "avnadmin";
-        $password = $_ENV['DB_PASSWORD'] ?? $_SERVER['DB_PASSWORD'] ?? getenv('DB_PASSWORD');
+        $password = $_ENV['DB_PASSWORD'] ?? $_SERVER['DB_PASSWORD'] ?? getenv('DB_PASSWORD') ?: null;
+        if (!$password) { return false; }
         $db_name = "defaultdb";
         $port = "22331";
         $this->db = mysqli_init();
