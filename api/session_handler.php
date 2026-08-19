@@ -20,6 +20,17 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
         if (!mysqli_real_connect($this->db, $sname, $unmae, $password, $db_name, (int)$port, NULL, $ssl_flag)) {
             return false;
         }
+
+        // Auto-create sessions table if it doesn't exist
+        $this->db->query("
+            CREATE TABLE IF NOT EXISTS `sessions` (
+                `id`        VARCHAR(128) NOT NULL,
+                `data`      MEDIUMTEXT   NOT NULL,
+                `timestamp` INT(11)      NOT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+        ");
+
         return true;
     }
 
