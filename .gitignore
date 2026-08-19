@@ -1,0 +1,2 @@
+# Local DB credentials — never commit this file
+api/db_config.php

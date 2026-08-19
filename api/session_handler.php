@@ -3,12 +3,14 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
     private $db;
 
     public function open($savePath, $sessionName): bool {
-        $sname = "mysql-35594af1-reapquizon-ff22.h.aivencloud.com";
-        $unmae = "avnadmin";
-        $password = $_ENV['DB_PASSWORD'] ?? $_SERVER['DB_PASSWORD'] ?? getenv('DB_PASSWORD') ?: null;
+        $_cfg = __DIR__ . '/db_config.php';
+        if (file_exists($_cfg)) { require_once $_cfg; }
+        $sname   = defined('_DB_HOST') ? _DB_HOST : 'mysql-35594af1-reapquizon-ff22.h.aivencloud.com';
+        $unmae   = defined('_DB_USER') ? _DB_USER : 'avnadmin';
+        $password = defined('_DB_PASS') ? _DB_PASS : ($_ENV['DB_PASSWORD'] ?? $_SERVER['DB_PASSWORD'] ?? getenv('DB_PASSWORD') ?: null);
         if (!$password) { return false; }
-        $db_name = "defaultdb";
-        $port = "22331";
+        $db_name = defined('_DB_NAME') ? _DB_NAME : 'defaultdb';
+        $port    = defined('_DB_PORT') ? _DB_PORT : '22331';
         $this->db = mysqli_init();
         mysqli_options($this->db, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, false);
         mysqli_ssl_set($this->db, NULL, NULL, NULL, NULL, NULL);
