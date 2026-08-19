@@ -1,3 +1,31 @@
+<?php
+$request_uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+
+function route_php_file($file_path) {
+    if (file_exists($file_path)) {
+        chdir(dirname($file_path));
+        require $file_path;
+        exit;
+    }
+}
+
+if (strncmp($request_uri, '/interface/ordersystem', 22) === 0) {
+    $sub = substr($request_uri, 22);
+    route_php_file(__DIR__ . '/pointofsale/ordersystem' . $sub);
+} elseif (strncmp($request_uri, '/interface/', 11) === 0) {
+    $sub = substr($request_uri, 11);
+    route_php_file(__DIR__ . '/interface/' . $sub);
+} elseif (strncmp($request_uri, '/inventory/', 11) === 0) {
+    $sub = substr($request_uri, 11);
+    route_php_file(__DIR__ . '/inventory/' . $sub);
+} elseif (strncmp($request_uri, '/pointofsale/', 13) === 0) {
+    $sub = substr($request_uri, 13);
+    route_php_file(__DIR__ . '/pointofsale/' . $sub);
+} elseif ($request_uri !== '/' && $request_uri !== '/index.php' && $request_uri !== '/api/index.php') {
+    $sub = ltrim($request_uri, '/');
+    route_php_file(__DIR__ . '/' . $sub);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
