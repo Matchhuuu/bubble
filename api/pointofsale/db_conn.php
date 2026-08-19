@@ -6,13 +6,13 @@ $password = $_ENV['DB_PASSWORD'] ?? $_SERVER['DB_PASSWORD'] ?? getenv('DB_PASSWO
 $db_name = "defaultdb";
 $port = "22331";
 
-$ca_cert = __DIR__ . '/../ca.pem';
-
 $conn = mysqli_init();
 mysqli_options($conn, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, false);
-mysqli_ssl_set($conn, NULL, NULL, file_exists($ca_cert) ? $ca_cert : NULL, NULL, NULL);
+mysqli_ssl_set($conn, NULL, NULL, NULL, NULL, NULL);
 
-if (!mysqli_real_connect($conn, $sname, $unmae, $password, $db_name, $port)) {
+$ssl_flag = defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT') ? MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT : 64;
+
+if (!mysqli_real_connect($conn, $sname, $unmae, $password, $db_name, (int)$port, NULL, $ssl_flag)) {
     die("❌ Connection Failed: " . mysqli_connect_error());
 }
 
