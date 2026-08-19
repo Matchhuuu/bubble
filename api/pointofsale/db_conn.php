@@ -9,7 +9,8 @@ $port = "22331";
 $ca_cert = __DIR__ . '/../ca.pem';
 
 $conn = mysqli_init();
-mysqli_ssl_set($conn, NULL, NULL, $ca_cert, NULL, NULL);
+mysqli_options($conn, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, false);
+mysqli_ssl_set($conn, NULL, NULL, file_exists($ca_cert) ? $ca_cert : NULL, NULL, NULL);
 
 if (!mysqli_real_connect($conn, $sname, $unmae, $password, $db_name, $port)) {
     die("❌ Connection Failed: " . mysqli_connect_error());

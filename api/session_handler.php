@@ -11,7 +11,8 @@ class DatabaseSessionHandler implements SessionHandlerInterface {
         $ca_cert = __DIR__ . '/ca.pem';
 
         $this->db = mysqli_init();
-        mysqli_ssl_set($this->db, NULL, NULL, $ca_cert, NULL, NULL);
+        mysqli_options($this->db, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, false);
+        mysqli_ssl_set($this->db, NULL, NULL, file_exists($ca_cert) ? $ca_cert : NULL, NULL, NULL);
         
         if (!mysqli_real_connect($this->db, $sname, $unmae, $password, $db_name, $port)) {
             return false;
