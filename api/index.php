@@ -27,34 +27,45 @@ if (strncmp($request_uri, '/api/', 5) === 0) {
     $request_uri = substr($request_uri, 4);
 }
 
-function route_php_file($file_path) {
+// Helper to resolve PHP file target path
+function resolve_target_file($file_path) {
     if (is_file($file_path)) {
-        chdir(dirname($file_path));
-        require $file_path;
-        exit;
+        return $file_path;
     }
     if (is_file($file_path . '.php')) {
-        chdir(dirname($file_path));
-        require $file_path . '.php';
-        exit;
+        return $file_path . '.php';
+    }
+    return null;
+}
+
+$target_file = null;
+if (strncmp($request_uri, '/interface/ordersystem', 22) === 0) {
+    $sub = substr($request_uri, 22);
+    $target_file = resolve_target_file(__DIR__ . '/pointofsale/ordersystem' . $sub);
+} elseif (strncmp($request_uri, '/interface/', 11) === 0) {
+    $sub = substr($request_uri, 11);
+    $target_file = resolve_target_file(__DIR__ . '/interface/' . $sub);
+} elseif (strncmp($request_uri, '/inventory/', 11) === 0) {
+    $sub = substr($request_uri, 11);
+    $target_file = resolve_target_file(__DIR__ . '/inventory/' . $sub);
+} elseif (strncmp($request_uri, '/pointofsale/', 13) === 0) {
+    $sub = substr($request_uri, 13);
+    $target_file = resolve_target_file(__DIR__ . '/pointofsale/' . $sub);
+} elseif ($request_uri !== '/' && $request_uri !== '/index.php' && $request_uri !== '/api/index.php') {
+    $sub = ltrim($request_uri, '/');
+    $target_file = resolve_target_file(__DIR__ . '/' . $sub);
+    if (!$target_file) {
+        $target_file = resolve_target_file(__DIR__ . '/interface/' . $sub)
+                    ?? resolve_target_file(__DIR__ . '/pointofsale/' . $sub)
+                    ?? resolve_target_file(__DIR__ . '/inventory/' . $sub);
     }
 }
 
-if (strncmp($request_uri, '/interface/ordersystem', 22) === 0) {
-    $sub = substr($request_uri, 22);
-    route_php_file(__DIR__ . '/pointofsale/ordersystem' . $sub);
-} elseif (strncmp($request_uri, '/interface/', 11) === 0) {
-    $sub = substr($request_uri, 11);
-    route_php_file(__DIR__ . '/interface/' . $sub);
-} elseif (strncmp($request_uri, '/inventory/', 11) === 0) {
-    $sub = substr($request_uri, 11);
-    route_php_file(__DIR__ . '/inventory/' . $sub);
-} elseif (strncmp($request_uri, '/pointofsale/', 13) === 0) {
-    $sub = substr($request_uri, 13);
-    route_php_file(__DIR__ . '/pointofsale/' . $sub);
-} elseif ($request_uri !== '/' && $request_uri !== '/index.php' && $request_uri !== '/api/index.php') {
-    $sub = ltrim($request_uri, '/');
-    route_php_file(__DIR__ . '/' . $sub);
+// Execute target file in global scope
+if ($target_file) {
+    chdir(dirname($target_file));
+    require $target_file;
+    exit;
 }
 ?>
 <!DOCTYPE html>

@@ -1,13 +1,22 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/api/session_handler.php';
 include "db_conn.php";
+if (!$conn && isset($GLOBALS['conn'])) {
+    $conn = $GLOBALS['conn'];
+}
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if (!$conn || $conn->connect_error) {
+    die("Connection failed: " . ($conn ? $conn->connect_error : 'Database connection not initialized'));
 }
 
 function getOrders($limit = 10, $offset = 0) {
     global $conn;
+    if (!$conn && isset($GLOBALS['conn'])) {
+        $conn = $GLOBALS['conn'];
+    }
+    if (!$conn) {
+        return [];
+    }
     $orders = [];
     $query = "SELECT * FROM customer_orders WHERE status ='Pending' ORDER BY created_at DESC LIMIT ? OFFSET ?";
     $stmt = $conn->prepare($query);
@@ -42,6 +51,12 @@ function getOrders($limit = 10, $offset = 0) {
 
 function getOrderDetails($orderId) {
     global $conn;
+    if (!$conn && isset($GLOBALS['conn'])) {
+        $conn = $GLOBALS['conn'];
+    }
+    if (!$conn) {
+        return [];
+    }
     $order = [];
     $query = "SELECT * FROM customer_orders WHERE order_id = ?";
     $stmt = $conn->prepare($query);
@@ -76,6 +91,12 @@ function getOrderDetails($orderId) {
 
 function updateOrderStatus($orderId, $status) {
     global $conn;
+    if (!$conn && isset($GLOBALS['conn'])) {
+        $conn = $GLOBALS['conn'];
+    }
+    if (!$conn) {
+        return false;
+    }
     $query = "UPDATE customer_orders SET status = ? WHERE order_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ss", $status, $orderId);
@@ -86,6 +107,12 @@ function updateOrderStatus($orderId, $status) {
 
 function deleteOrder($orderId) {
     global $conn;
+    if (!$conn && isset($GLOBALS['conn'])) {
+        $conn = $GLOBALS['conn'];
+    }
+    if (!$conn) {
+        return false;
+    }
     
     // Start a transaction
     $conn->begin_transaction();
@@ -138,10 +165,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_order'])) {
 $orders = getOrders($limit, $offset);
 
 // Get total number of orders for pagination
+$totalOrders = 0;
 $totalOrdersQuery = "SELECT COUNT(*) as total FROM customer_orders";
-$totalOrdersResult = $conn->query($totalOrdersQuery);
-$totalOrders = $totalOrdersResult->fetch_assoc()['total'];
-$totalPages = ceil($totalOrders / $limit);
+$totalOrdersResult = $conn ? $conn->query($totalOrdersQuery) : false;
+if ($totalOrdersResult && $row = $totalOrdersResult->fetch_assoc()) {
+    $totalOrders = (int)$row['total'];
+}
+$totalPages = ceil($totalOrders / max(1, $limit));
 ?>
 
 <!DOCTYPE html>

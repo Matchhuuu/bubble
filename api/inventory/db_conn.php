@@ -20,6 +20,9 @@ if (!mysqli_real_connect($conn, $sname, $unmae, $password, $db_name, (int)$port,
     die("❌ Connection Failed: " . mysqli_connect_error());
 }
 
+$GLOBALS['conn'] = $conn;
+$GLOBALS['connection'] = $conn;
+
 // Disable ONLY_FULL_GROUP_BY for compatibility with legacy queries
 $mode_res = $conn->query("SELECT @@sql_mode as mode");
 if ($mode_res && $row = $mode_res->fetch_assoc()) {
