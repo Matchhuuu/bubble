@@ -25,7 +25,7 @@ if (isset($_POST['add_chicken'])) {
 
   // Insert into order items
   $sql = "INSERT INTO customer_order_items (order_id, menu_item_id, size_id, quantity, price, flavor, created_at)
-            VALUES ('$order_id', 'CHICKEN', 'REG', '$quantity', '', '$flavor', NOW())";
+            VALUES ('$order_id', 'CHICKEN', 'REG', '$quantity', 0.00, '$flavor', NOW())";
 
   // <CHANGE> Add inventory decrement
   $sql_inventory = "UPDATE unified_inventory 
@@ -40,7 +40,7 @@ if (isset($_POST['add_chicken'])) {
 }
 if (isset($_POST['confirm_payment'])) {
   $order_id = $_POST['order_id'];
-  $amount_paid = $_POST['amount_paid'];
+  $amount_paid = floatval($_POST['amount_paid'] ?? 0);
 
   $sql = "UPDATE customer_orders 
             SET amount_paid = '$amount_paid'
