@@ -116,6 +116,9 @@ function recordDepletion($connection, $prod_id, $prod_name, $qty_ordered, $unit_
         $update_stmt->close();
         
         // Step 6: Record depletion in history
+        $date_dep = !empty(trim($date_dep ?? '')) ? trim($date_dep) : date('Y-m-d');
+        $time_dep = !empty(trim($time_dep ?? '')) ? trim($time_dep) : date('H:i:s');
+
         $insert_query = "INSERT INTO depleted_history 
             (PROD_ID, PROD_NAME, QTY_ORDERED, UNIT_ORDERED, STOCK_PER_UNIT, QTY_DEPLETED, BASE_UNIT, TOT_PRICE, DATE_DEP, TIME_DEP) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -184,9 +187,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $prod_name = trim($_POST['product_name'] ?? '');
         $qty_ordered = intval($_POST['quantity_ordered'] ?? 0);
         $unit_ordered = trim($_POST['unit_ordered'] ?? '');
-        $stock_per_unit = intval($_POST['stock_per_unit'] ?? 0);
-        $date_dep = $_POST['date'] ?? date('Y-m-d');
-        $time_dep = $_POST['time'] ?? date('H:i:s');
+        $raw_date = trim($_POST['date'] ?? '');
+        $date_dep = !empty($raw_date) ? $raw_date : date('Y-m-d');
+        $raw_time = trim($_POST['time'] ?? '');
+        $time_dep = !empty($raw_time) ? $raw_time : date('H:i:s');
 
         // Validate all required fields
         if ($prod_id > 0 && !empty($prod_name) && $qty_ordered > 0 && !empty($unit_ordered) && $stock_per_unit > 0) {

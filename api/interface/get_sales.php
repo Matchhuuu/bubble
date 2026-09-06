@@ -15,7 +15,7 @@ if(isset($_SESSION['ACC_ID'])  && isset($_SESSION['EMAIL'])){
     $sum = (float)($row['total'] ?? 0);
 
     date_default_timezone_set("Asia/Manila");
-    $date = date('Y/m/d/');
+    $date = date('Y-m-d');
     $id = intval($_SESSION['ACC_ID']);
 
     $sql1 = "   INSERT INTO sale_records (DATE_OF_SALE, TOTAL_SALE, LAST_TRANSACT)

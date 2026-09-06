@@ -109,10 +109,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $new_category = $_POST['new_category'] ?? null; 
                 $unit = $_POST['unit'];
                 $new_unit = $_POST['new_unit'] ?? null; 
-                $current_quantity = floatval($_POST['current_quantity']); 
-                $cost_per_unit = floatval($_POST['cost_per_unit']); 
+                $current_quantity = floatval($_POST['current_quantity'] ?? 0); 
+                $cost_per_unit = floatval($_POST['cost_per_unit'] ?? 0); 
                 $is_liquid = isset($_POST['is_liquid']) ? 1 : 0;
-                $expiration_date = $_POST['expiration_date'] ?? null;
+                $raw_expiration_date = trim($_POST['expiration_date'] ?? '');
+                $expiration_date = (!empty($raw_expiration_date) && $is_liquid) ? $raw_expiration_date : null;
 
                 if ($category === "NEW_CATEGORY" && !empty($new_category)) {
                     $category = trim($new_category);
@@ -188,10 +189,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 break;
 
             case "edit_item":
-                $item_id = intval($_POST['item_id']);
-                $item_name = $_POST['item_name'];
-                $cost_per_unit = floatval($_POST['cost_per_unit']);
-                $expiration_date = $_POST['expiration_date'] ?? null; 
+                $item_id = intval($_POST['item_id'] ?? 0);
+                $item_name = $_POST['item_name'] ?? '';
+                $cost_per_unit = floatval($_POST['cost_per_unit'] ?? 0);
+                $raw_expiration_date = trim($_POST['expiration_date'] ?? '');
+                $expiration_date = !empty($raw_expiration_date) ? $raw_expiration_date : null; 
 
                 if ($item_id > 0) {
                
