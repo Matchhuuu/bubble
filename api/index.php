@@ -1,10 +1,41 @@
 <?php
+define('SYSTEM_VERSION', '2.1.0');
+define('API_VERSION', '2.1.0');
+
+// Expose API version headers
+header('X-API-Version: ' . API_VERSION);
+header('X-System-Version: ' . SYSTEM_VERSION);
+
 $request_uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 
+// Normalize API version endpoint
+if ($request_uri === '/version' || $request_uri === '/api/version' || $request_uri === '/version.php' || $request_uri === '/api/version.php') {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode([
+        'system' => 'BubbleAid POS & Inventory Management System',
+        'system_version' => SYSTEM_VERSION,
+        'api_version' => API_VERSION,
+        'php_version' => PHP_VERSION,
+        'status' => 'operational',
+        'timestamp' => date('c')
+    ], JSON_PRETTY_PRINT);
+    exit;
+}
+
+// Normalize /api/ prefix if present
+if (strncmp($request_uri, '/api/', 5) === 0) {
+    $request_uri = substr($request_uri, 4);
+}
+
 function route_php_file($file_path) {
-    if (file_exists($file_path)) {
+    if (is_file($file_path)) {
         chdir(dirname($file_path));
         require $file_path;
+        exit;
+    }
+    if (is_file($file_path . '.php')) {
+        chdir(dirname($file_path));
+        require $file_path . '.php';
         exit;
     }
 }
@@ -151,6 +182,7 @@ if (strncmp($request_uri, '/interface/ordersystem', 22) === 0) {
             <form action="/interface/login.php" method="get">
                 <button type="submit" class="btn">ENTER</button>
             </form>
+            <p style="font-size: 11px; color: #888; margin-top: 15px;">API Version <?php echo API_VERSION; ?></p>
         </center>
     </div>
 

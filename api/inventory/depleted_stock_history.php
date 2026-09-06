@@ -47,9 +47,9 @@ function validateStockAvailability($current_quantity, $qty_to_deduct) {
     if ($resulting_stock < 0) {
         return [
             'valid' => false,
-            'message' => "❌ INSUFFICIENT STOCK - Available: " . number_format($current_quantity, 0) .
-                        ", Required: " . number_format($qty_to_deduct, 0) . 
-                        ", Shortage: " . number_format(abs($resulting_stock), 0),
+            'message' => "❌ INSUFFICIENT STOCK - Available: " . number_format((float)($current_quantity ?? 0), 0) .
+                        ", Required: " . number_format((float)($qty_to_deduct ?? 0), 0) . 
+                        ", Shortage: " . number_format((float)abs($resulting_stock), 0),
             'shortage' => abs($resulting_stock)
         ];
     }
@@ -151,11 +151,11 @@ function recordDepletion($connection, $prod_id, $prod_name, $qty_ordered, $unit_
         
         $success_msg = "✓ DEPLETION RECORDED SUCCESSFULLY\n";
         $success_msg .= "Product: " . htmlspecialchars($prod_name) . "\n";
-        $success_msg .= "Ordered: " . number_format($qty_ordered) . " " . htmlspecialchars($unit_ordered) . "\n";
-        $success_msg .= "Conversion: 1 " . htmlspecialchars($unit_ordered) . " = " . number_format($stock_per_unit, 0) . " " . htmlspecialchars($base_unit) . "\n";
-        $success_msg .= "Actual Deduction: " . number_format($qty_depleted) . " " . htmlspecialchars($base_unit) . "\n";
-        $success_msg .= "Total Cost: ₱" . number_format($tot_price, 0) . "\n";
-        $success_msg .= "Remaining Stock: " . number_format($validation['resulting_stock'], 0) . " " . htmlspecialchars($base_unit);
+        $success_msg .= "Ordered: " . number_format((float)($qty_ordered ?? 0)) . " " . htmlspecialchars($unit_ordered) . "\n";
+        $success_msg .= "Conversion: 1 " . htmlspecialchars($unit_ordered) . " = " . number_format((float)($stock_per_unit ?? 0), 0) . " " . htmlspecialchars($base_unit) . "\n";
+        $success_msg .= "Actual Deduction: " . number_format((float)($qty_depleted ?? 0)) . " " . htmlspecialchars($base_unit) . "\n";
+        $success_msg .= "Total Cost: ₱" . number_format((float)($tot_price ?? 0), 0) . "\n";
+        $success_msg .= "Remaining Stock: " . number_format((float)($validation['resulting_stock'] ?? 0), 0) . " " . htmlspecialchars($base_unit);
         
         return [
             'success' => true,
@@ -817,15 +817,15 @@ $stats = $stats_result->fetch_assoc();
         <div class="stats-container">
             <div class="stat-card">
                 <div class="stat-label">Total Depletion Records</div>
-                <div class="stat-value"><?php echo number_format($stats['total_depletion_records'] ?? 0); ?></div>
+                <div class="stat-value"><?php echo number_format((float)($stats['total_depletion_records'] ?? 0)); ?></div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Total Base Units Depleted</div>
-                <div class="stat-value"><?php echo number_format($stats['total_qty_depleted'] ?? 0, 0); ?></div>
+                <div class="stat-value"><?php echo number_format((float)($stats['total_qty_depleted'] ?? 0), 0); ?></div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Total Value Depleted</div>
-                <div class="stat-value">₱<?php echo number_format($stats['total_value_depleted'] ?? 0, 0); ?></div>
+                <div class="stat-value">₱<?php echo number_format((float)($stats['total_value_depleted'] ?? 0), 0); ?></div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Last Depletion Date</div>
@@ -877,8 +877,8 @@ $stats = $stats_result->fetch_assoc();
                             <tr>
                                 <td class='product-id'>" . htmlspecialchars($row['ID']) . "</td>
                                 <td class='product-name'>" . htmlspecialchars($row['PROD_NAME']) . "</td>
-                                <td><strong>" . number_format($row['QTY_DEPLETED']) .  "</strong></td>
-                                <td><span class='cost-value'>₱" . number_format($row['TOT_PRICE']) . "</span></td>
+                                <td><strong>" . number_format((float)($row['QTY_DEPLETED'] ?? 0)) .  "</strong></td>
+                                <td><span class='cost-value'>₱" . number_format((float)($row['TOT_PRICE'] ?? 0)) . "</span></td>
                                 <td>" . htmlspecialchars($row['DATE_DEP']) . " " . htmlspecialchars($row['TIME_DEP']) . "</td>
                                 <td><strong>" . htmlspecialchars($row['current_stock']) .  "</strong></td>
                             </tr>

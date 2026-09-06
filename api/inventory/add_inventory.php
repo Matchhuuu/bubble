@@ -427,7 +427,7 @@ h1, h2, h3{
                 <h5 style="font-family: Poppins;">Product Details</h5>
                 <p><strong>Product ID:</strong> <?php echo $productDetails['item_id']; ?></p>
                 <p><strong>Product Name:</strong> <?php echo $productDetails['item_name']; ?></p>
-                <p><strong>Price Per Product:</strong> <?php echo number_format($productDetails['price'], 2); ?></p>
+                <p><strong>Price Per Product:</strong> <?php echo number_format((float)($productDetails['price'] ?? 0), 2); ?></p>
 
 
 
@@ -453,7 +453,7 @@ h1, h2, h3{
                                     <!-- TOTAL PRICE RESULT  -->
 
                 <?php if ($totalPrice > 0): ?>
-                    <h4 style="font-family: Poppins;">Total Price of Added Item: <?php echo number_format($totalPrice, 2); ?></h4>
+                    <h4 style="font-family: Poppins;">Total Price of Added Item: <?php echo number_format((float)($totalPrice ?? 0), 2); ?></h4>
                 <?php endif; ?>
 
 

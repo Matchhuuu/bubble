@@ -1,6 +1,8 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../vendor/setasign/fpdf/fpdf.php';
+$vendor_autoload = file_exists(__DIR__ . '/../../vendor/autoload.php') ? __DIR__ . '/../../vendor/autoload.php' : __DIR__ . '/../vendor/autoload.php';
+if (file_exists($vendor_autoload)) { require_once $vendor_autoload; }
+$fpdf_file = file_exists(__DIR__ . '/../../vendor/setasign/fpdf/fpdf.php') ? __DIR__ . '/../../vendor/setasign/fpdf/fpdf.php' : __DIR__ . '/../vendor/setasign/fpdf/fpdf.php';
+if (file_exists($fpdf_file)) { require_once $fpdf_file; }
 
 include "db_conn.php";
 
@@ -118,18 +120,18 @@ while ($row = $resultOrders->fetch_assoc()) {
     $pdf->Cell(15, 8, $row['size_id'], 1);
     $pdf->Cell(15, 8, $row['flavor'], 1);
     $pdf->Cell(15, 8, $row['quantity'], 1);
-    $pdf->Cell(20, 8, number_format($row['price'], 2), 1);
-    $pdf->Cell(25, 8, number_format($row['total_price'], 2), 1);
+    $pdf->Cell(20, 8, number_format((float)($row['price'] ?? 0), 2), 1);
+    $pdf->Cell(25, 8, number_format((float)($row['total_price'] ?? 0), 2), 1);
     $pdf->Cell(35, 8, $row['created_at'], 1);
     $pdf->Ln();
 
-    $grandTotal += $row['total_price'];
+    $grandTotal += (float)($row['total_price'] ?? 0);
 }
 
 // Total row
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(130, 8, 'TOTAL SALES', 1, 0, 'R');
-$pdf->Cell(60, 8, number_format($grandTotal, 2), 1, 0, 'R');
+$pdf->Cell(60, 8, number_format((float)($grandTotal ?? 0), 2), 1, 0, 'R');
 
 
 $pdf->Ln(15);
@@ -151,7 +153,7 @@ $pdf->SetFont('Arial', '', 10);
 while ($row = $resultSummary->fetch_assoc()) {
     $pdf->Cell(80, 8, substr($row['menu_item'], 0, 35), 1);
     $pdf->Cell(30, 8, $row['total_qty'], 1);
-    $pdf->Cell(40, 8, number_format($row['total_sale'], 2), 1);
+    $pdf->Cell(40, 8, number_format((float)($row['total_sale'] ?? 0), 2), 1);
     $pdf->Ln();
 }
 $pdf->Ln(10);

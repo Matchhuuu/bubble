@@ -1249,7 +1249,7 @@ function toggleDropdown() {
                 <div class="stat-label">Liquid Items</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">₱<?php echo number_format($liquid_stats['total_value'], 0); ?></div>
+                <div class="stat-number">₱<?php echo number_format((float)($liquid_stats['total_value'] ?? 0), 0); ?></div>
                 <div class="stat-label">Liquid Value</div>
             </div>
             <div class="stat-card critical-stock">
@@ -1378,8 +1378,8 @@ function toggleDropdown() {
                                 <td><small style='color: #666;'>" . htmlspecialchars($usedInMenuDisplay, ENT_QUOTES, 'UTF-8') . "</small></td>
                                 <td><strong>{$row['current_quantity']}</strong></td>
                                 <td>" . $safeUnit . "</td>
-                                <td>₱" . number_format($row['cost_per_unit'], 2) . "</td>
-                                <td><strong>₱" . number_format($row['total_value'], 2) . "</strong></td>
+                                <td>₱" . number_format((float)($row['cost_per_unit'] ?? 0), 2) . "</td>
+                                <td><strong>₱" . number_format((float)($row['total_value'] ?? 0), 2) . "</strong></td>
                                 <td><span class='{$expirationClass}'>{$expirationDisplay}</span></td>
                                 <td><strong>{$row['stock_status']}</strong></td>
                                 <td class='center'>
@@ -1426,7 +1426,7 @@ function toggleDropdown() {
                 <div class="stat-label">Solid Items</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">₱<?php echo number_format($solid_stats['total_value'], 0); ?></div>
+                <div class="stat-number">₱<?php echo number_format((float)($solid_stats['total_value'] ?? 0), 0); ?></div>
                 <div class="stat-label">Solid Value</div>
             </div>
             <div class="stat-card critical-stock">
@@ -1528,8 +1528,8 @@ function toggleDropdown() {
                                 <td><small style='color: #666;'>" . htmlspecialchars($usedInMenuDisplay, ENT_QUOTES, 'UTF-8') . "</small></td>
                                 <td><strong>{$row['current_quantity']}</strong></td>
                                 <td>" . $safeUnit . "</td>
-                                <td>₱" . number_format($row['cost_per_unit'], 2) . "</td>
-                                <td><strong>₱" . number_format($row['total_value'], 2) . "</strong></td>
+                                <td>₱" . number_format((float)($row['cost_per_unit'] ?? 0), 2) . "</td>
+                                <td><strong>₱" . number_format((float)($row['total_value'] ?? 0), 2) . "</strong></td>
                                 <td><strong>{$row['stock_status']}</strong></td>
                                 <td  class='center'>
                                     <button class='btn-edit' 
@@ -1735,7 +1735,7 @@ function toggleDropdown() {
                             $menu_key = $menu_item['menu_item_id'] . '_' . $menu_item['size_id'];
                             $display_name = htmlspecialchars($menu_item['menu_item_name']) . 
                                            ($menu_item['size_id'] !== 'REG' ? ' (' . htmlspecialchars($menu_item['size_id']) . ')' : '') .
-                                           ' - ₱' . number_format($menu_item['price'], 2);
+                                           ' - ₱' . number_format((float)($menu_item['price'] ?? 0), 2);
                             
                             echo "<div class='menu-item-row'>
                                     <input type='checkbox' class='menu-item-checkbox connect-checkbox' 
@@ -1896,7 +1896,7 @@ function toggleDropdown() {
                             $menu_key = $menu_item['menu_item_id'] . '_' . $menu_item['size_id'];
                             $display_name = htmlspecialchars($menu_item['menu_item_name']) . 
                                            ($menu_item['size_id'] !== 'REG' ? ' (' . htmlspecialchars($menu_item['size_id']) . ')' : '') .
-                                           ' - ₱' . number_format($menu_item['price'], 2);
+                                           ' - ₱' . number_format((float)($menu_item['price'] ?? 0), 2);
                             
                             echo "<div class='menu-item-row'>
                                     <input type='checkbox' class='menu-item-checkbox' 

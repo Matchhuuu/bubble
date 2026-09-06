@@ -1,4 +1,5 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/api/session_handler.php';
 require_once 'config1.php';
 
 $active_section = isset($_GET['section']) ? $_GET['section'] : 'drinks';
@@ -854,7 +855,7 @@ body {
 
             <div class="cart-summary" onclick="toggleCart()">
                 <span class="cart-count"><?php echo count($_SESSION['cart']); ?></span>
-                <span class="cart-total">₱<?php echo number_format($total, 2); ?></span>
+                <span class="cart-total">₱<?php echo number_format((float)($total ?? 0), 2); ?></span>
             </div>
         </div>
     </div>
@@ -910,7 +911,7 @@ body {
                                                     
                                                     <button type="submit" name="add_to_cart" class="add-to-cart-btn">
                                                         <span class="size-name"><?php echo htmlspecialchars($size); ?></span>
-                                                        <span class="size-price">₱<?php echo number_format($data['price'], 2); ?></span>
+                                                        <span class="size-price">₱<?php echo number_format((float)($data['price'] ?? 0), 2); ?></span>
                                                     </button>
                                                 </form>
                                             <?php endforeach; ?>
@@ -951,7 +952,7 @@ body {
                                         | Flavor: <?php echo htmlspecialchars($item['flavor']); ?>
                                     <?php endif; ?>
                                 </p>
-                                <p class="item-price">₱<?php echo number_format($item['total_price'], 2); ?></p>
+                                <p class="item-price">₱<?php echo number_format((float)($item['total_price'] ?? 0), 2); ?></p>
                             </div>
                             <div class="quantity-controls">
                                 <form method="post" style="display: inline;">
@@ -975,7 +976,7 @@ body {
 
             <?php if (!empty($_SESSION['cart'])): ?>
                 <div class="cart-total">
-                    <h3>Total: ₱<?php echo number_format($total, 2); ?></h3>
+                    <h3>Total: ₱<?php echo number_format((float)($total ?? 0), 2); ?></h3>
                 </div>
 
                 <div class="checkout-section">
@@ -1028,11 +1029,11 @@ body {
                         <?php foreach ($_SESSION['cart'] as $item): ?>
                             <div class="summary-item">
                                 <span><?php echo htmlspecialchars($item['name']); ?> (<?php echo htmlspecialchars($item['size']); ?>) x<?php echo $item['quantity']; ?></span>
-                                <span>₱<?php echo number_format($item['total_price'], 2); ?></span>
+                                <span>₱<?php echo number_format((float)($item['total_price'] ?? 0), 2); ?></span>
                             </div>
                         <?php endforeach; ?>
                         <div class="summary-total">
-                            <strong>Total: ₱<?php echo number_format($total, 2); ?></strong>
+                            <strong>Total: ₱<?php echo number_format((float)($total ?? 0), 2); ?></strong>
                         </div>
                     <?php endif; ?>
                 </div>

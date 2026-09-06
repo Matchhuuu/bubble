@@ -286,7 +286,7 @@ function generateReceipt($orderId, $cart, $subtotal, $discount, $total, $amount_
             $receipt .= "<td>{$itemDetails}</td>";
             $receipt .= "<td>{$item['size']}</td>";
             $receipt .= "<td>{$item['quantity']} (Refills: {$item['refills']}) <br><strong>Total Wings: {$itemTotalWings} pcs</strong></td>";
-            $receipt .= "<td>₱" . number_format($item['total_price'], 2) . "</td>";
+            $receipt .= "<td>₱" . number_format((float)($item['total_price'] ?? 0), 2) . "</td>";
             $receipt .= "</tr>";
         } else if ($item['size'] === 'UNLI' && stripos($item['name'], 'wings') !== false) {
             $baseWings = 10 * $item['quantity'];
@@ -295,13 +295,13 @@ function generateReceipt($orderId, $cart, $subtotal, $discount, $total, $amount_
             $receipt .= "<td>{$itemDetails}</td>";
             $receipt .= "<td>{$item['size']}</td>";
             $receipt .= "<td>{$item['quantity']} <br><strong>Total Wings: {$baseWings} pcs</strong></td>";
-            $receipt .= "<td>₱" . number_format($item['total_price'], 2) . "</td>";
+            $receipt .= "<td>₱" . number_format((float)($item['total_price'] ?? 0), 2) . "</td>";
             $receipt .= "</tr>";
         } else {
             $receipt .= "<td>{$itemDetails}</td>";
             $receipt .= "<td>{$item['size']}</td>";
             $receipt .= "<td>{$item['quantity']}</td>";
-            $receipt .= "<td>₱" . number_format($item['total_price'], 2) . "</td>";
+            $receipt .= "<td>₱" . number_format((float)($item['total_price'] ?? 0), 2) . "</td>";
             $receipt .= "</tr>";
         }
     }
@@ -314,17 +314,17 @@ function generateReceipt($orderId, $cart, $subtotal, $discount, $total, $amount_
         $receipt .= "</p></div>";
     }
 
-    $receipt .= "<p><strong>Subtotal:</strong> ₱" . number_format($subtotal, 2) . "</p>";
+    $receipt .= "<p><strong>Subtotal:</strong> ₱" . number_format((float)($subtotal ?? 0), 2) . "</p>";
 
     if ($discount > 0 && $discountType) {
-        $receipt .= "<p><strong>Discount (" . htmlspecialchars($discountType) . "):</strong> -₱" . number_format($discount, 2) . "</p>";
+        $receipt .= "<p><strong>Discount (" . htmlspecialchars($discountType) . "):</strong> -₱" . number_format((float)($discount ?? 0), 2) . "</p>";
     } else if ($discount > 0) {
-        $receipt .= "<p><strong>Discount:</strong> -₱" . number_format($discount, 2) . "</p>";
+        $receipt .= "<p><strong>Discount:</strong> -₱" . number_format((float)($discount ?? 0), 2) . "</p>";
     }
 
-    $receipt .= "<p><strong>Total:</strong> ₱" . number_format($total, 2) . "</p>";
-    $receipt .= "<p><strong>Amount Paid:</strong> ₱" . number_format($amount_paid, 2) . "</p>";
-    $receipt .= "<p><strong>Change:</strong> ₱" . number_format($change, 2) . "</p>";
+    $receipt .= "<p><strong>Total:</strong> ₱" . number_format((float)($total ?? 0), 2) . "</p>";
+    $receipt .= "<p><strong>Amount Paid:</strong> ₱" . number_format((float)($amount_paid ?? 0), 2) . "</p>";
+    $receipt .= "<p><strong>Change:</strong> ₱" . number_format((float)($change ?? 0), 2) . "</p>";
     return $receipt;
 }
 
@@ -754,7 +754,7 @@ if (isset($_POST['pay'])) {
     $amount_paid = floatval($_POST['amount_paid']);
     if ($amount_paid >= $total) {
         $change = $amount_paid - $total;
-        $payment_message = "Payment successful! Change: ₱" . number_format($change, 2);
+        $payment_message = "Payment successful! Change: ₱" . number_format((float)($change ?? 0), 2);
     } else {
         $payment_message = "Insufficient payment. Please pay the full amount.";
     }
@@ -1478,7 +1478,7 @@ if (isset($_POST['complete_order'])) {
                                             <?php if ($active_section === 'drinks'): ?>
                                                 <button type="button" class="size-button"
                                                     onclick="openDrinkCustomizationModal('<?php echo htmlspecialchars($item); ?>', '<?php echo htmlspecialchars($category); ?>', '<?php echo htmlspecialchars($active_section); ?>', '<?php echo htmlspecialchars($size); ?>', <?php echo $data['price']; ?>)">
-                                                    <?php echo htmlspecialchars($size); ?><br>₱<?php echo number_format($data['price'], 2); ?>
+                                                    <?php echo htmlspecialchars($size); ?><br>₱<?php echo number_format((float)($data['price'] ?? 0), 2); ?>
                                                 </button>
                                             <?php else: ?>
                                                 <form method="post" style="display: inline;">
@@ -1498,7 +1498,7 @@ if (isset($_POST['complete_order'])) {
                                                         </select>
                                                     <?php endif; ?>
                                                     <button type="submit" name="add_to_cart" class="size-button">
-                                                        <?php echo htmlspecialchars($size); ?><br>₱<?php echo number_format($data['price'], 2); ?>
+                                                        <?php echo htmlspecialchars($size); ?><br>₱<?php echo number_format((float)($data['price'] ?? 0), 2); ?>
                                                     </button>
                                                 </form>
                                             <?php endif; ?>
@@ -1541,7 +1541,7 @@ if (isset($_POST['complete_order'])) {
                                     if (isset($item['refills']) && $item['refills'] > 0 && $item['size'] === 'UNLI' && stripos($item['name'], 'wings') !== false) {
                                         $baseWings = 10 * $item['quantity'];
                                         $totalWings = $baseWings + ($item['refills'] * 5);
-                                        echo '<br><small class="refills-info">Refills: ' . $item['refills'] . ' (₱' . number_format($item['refills'] * 5, 2) . ')</small>';
+                                        echo '<br><small class="refills-info">Refills: ' . $item['refills'] . ' (₱' . number_format((float)($item['refills'] * 5), 2) . ')</small>';
                                         echo '<br><small class="wings-count">🍗 Total Wings: ' . $totalWings . ' pieces</small>';
                                     } else if ($item['size'] === 'UNLI' && stripos($item['name'], 'wings') !== false) {
                                         $baseWings = 10 * $item['quantity'];
@@ -1549,7 +1549,7 @@ if (isset($_POST['complete_order'])) {
                                     }
                                     ?>
                                 </div>
-                                <div class="cart-item-price">₱<?php echo number_format($item['total_price'], 2); ?></div>
+                                <div class="cart-item-price">₱<?php echo number_format((float)($item['total_price'] ?? 0), 2); ?></div>
                             </div>
                             <div class="quantity-controls">
                                 <form method="post" style="display: inline;">
@@ -1579,14 +1579,14 @@ if (isset($_POST['complete_order'])) {
             <?php endif; ?>
             <div class="total">
                 <?php if (isset($_SESSION['discount']) && $_SESSION['discount'] > 0): ?>
-                    <div class="subtotal">Subtotal: ₱<?php echo number_format($subtotal, 2); ?></div>
+                    <div class="subtotal">Subtotal: ₱<?php echo number_format((float)($subtotal ?? 0), 2); ?></div>
                     <div class="discount">
                         Discount
                         (<?php echo isset($_SESSION['discount_type']) ? htmlspecialchars($_SESSION['discount_type']) : $_SESSION['discount'] . '%'; ?>):
-                        -₱<?php echo number_format($subtotal - $total, 2); ?>
+                        -₱<?php echo number_format((float)(($subtotal ?? 0) - ($total ?? 0)), 2); ?>
                     </div>
                 <?php endif; ?>
-                Total: ₱<?php echo number_format($total, 2); ?>
+                Total: ₱<?php echo number_format((float)($total ?? 0), 2); ?>
             </div>
             <div class="checkout-form">
                 <form method="post">

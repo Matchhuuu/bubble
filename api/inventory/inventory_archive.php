@@ -755,8 +755,8 @@ if ($units_result) {
                                 echo "<td>" . htmlspecialchars($item['category']) . "</td>";
                                 echo "<td>" . htmlspecialchars($item['current_quantity']) . "</td>";
                                 echo "<td>" . htmlspecialchars($item['unit']) . "</td>";
-                                echo "<td>$" . number_format($item['cost_per_unit'], 2) . "</td>";
-                                echo "<td>$" . number_format($item['current_quantity'] * $item['cost_per_unit'], 2) . "</td>";
+                                echo "<td>$" . number_format((float)($item['cost_per_unit'] ?? 0), 2) . "</td>";
+                                echo "<td>$" . number_format((float)($item['current_quantity'] ?? 0) * (float)($item['cost_per_unit'] ?? 0), 2) . "</td>";
                                 echo "<td><span class='status-badge $status_class'>$status_text</span></td>";
                                 echo "</tr>";
                             }
@@ -810,8 +810,8 @@ if ($units_result) {
                                 echo "<td>" . htmlspecialchars($item['category']) . "</td>";
                                 echo "<td>" . htmlspecialchars($item['current_quantity']) . "</td>";
                                 echo "<td>" . htmlspecialchars($item['unit']) . "</td>";
-                                echo "<td>$" . number_format($item['cost_per_unit'], 2) . "</td>";
-                                echo "<td>$" . number_format($item['current_quantity'] * $item['cost_per_unit'], 2) . "</td>";
+                                echo "<td>$" . number_format((float)($item['cost_per_unit'] ?? 0), 2) . "</td>";
+                                echo "<td>$" . number_format((float)($item['current_quantity'] ?? 0) * (float)($item['cost_per_unit'] ?? 0), 2) . "</td>";
                                 echo "<td><span class='status-badge $status_class'>$status_text</span></td>";
                                 echo "</tr>";
                             }

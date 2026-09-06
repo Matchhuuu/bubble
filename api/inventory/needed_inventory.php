@@ -413,7 +413,7 @@ h1, h2, h3{
     
         while ($row = $result_returned_goods->fetch_assoc()) {
 
-            $totalPrice = $row['cost_per_unit'] * $row['CURRENT_QUANTITY'];
+            $totalPrice = (float)($row['cost_per_unit'] ?? 0) * (float)($row['CURRENT_QUANTITY'] ?? 0);
             
             if (($row['is_liquid'] != 1 && $row['CURRENT_QUANTITY'] > 50) || 
                 ($row['is_liquid'] == 1 && $row['CURRENT_QUANTITY'] > 800)) {
@@ -427,10 +427,9 @@ h1, h2, h3{
                     <td>{$row['ITEM_NAME']}</td>
                     <td class='status'>{$row['cost_per_unit']}</td>
                     <td class='stock-quantity' data-liquid='{$row['is_liquid']}'>{$row['CURRENT_QUANTITY']}</td>
-                    <td> P " . number_format($totalPrice, 2) . "</td>
+                    <td> P " . number_format((float)$totalPrice, 2) . "</td>
                     <td>{$liquidStatus}</td>
-                </tr>
-                ";
+                </tr>";
             }
         }
         ?>
