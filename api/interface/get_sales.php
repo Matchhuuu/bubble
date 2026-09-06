@@ -5,20 +5,18 @@ include "db_conn.php"; $connection = $conn;
 
 if(isset($_SESSION['ACC_ID'])  && isset($_SESSION['EMAIL'])){ 
 
-    $sqlsum = "SELECT SUM(total) as total FROM customer_orders
+    $sqlsum = "SELECT COALESCE(SUM(total), 0) as total FROM customer_orders
                 WHERE status = 'Completed'";
 
     $result = $connection->query($sqlsum);
          
-    $row= mysqli_fetch_array($result);
+    $row = mysqli_fetch_array($result);
 
-    $sum= $row['total'];
+    $sum = (float)($row['total'] ?? 0);
 
-
-    
     date_default_timezone_set("Asia/Manila");
     $date = date('Y/m/d/');
-    $id = $_SESSION['ACC_ID'];
+    $id = intval($_SESSION['ACC_ID']);
 
     $sql1 = "   INSERT INTO sale_records (DATE_OF_SALE, TOTAL_SALE, LAST_TRANSACT)
                 VALUES ('$date','$sum','$id')";

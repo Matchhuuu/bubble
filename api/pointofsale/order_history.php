@@ -466,10 +466,10 @@ $orders = $stmt->get_result();
                                         <?php echo $display_text; ?>
                                     </span>
                                 </td>
-                                <td>₱<?php echo number_format($order['total'], 2); ?></td>
-                                <td>₱<?php echo number_format($order['discount'], 2); ?></td>
-                                <td>₱<?php echo number_format($order['amount_paid'], 2); ?></td>
-                                <td>₱<?php echo number_format($order['amount_paid'] - $order['total'], 2); ?></td>
+                                <td>₱<?php echo number_format((float)($order['total'] ?? 0), 2); ?></td>
+                                <td>₱<?php echo number_format((float)($order['discount'] ?? 0), 2); ?></td>
+                                <td>₱<?php echo number_format((float)($order['amount_paid'] ?? 0), 2); ?></td>
+                                <td>₱<?php echo number_format((float)($order['amount_paid'] ?? 0) - (float)($order['total'] ?? 0), 2); ?></td>
                                 <td>
                                     <a href="view_receipt.php?order_id=<?php echo urlencode($order['order_id']); ?>" 
                                        class="view-receipt-btn">View Receipt</a>

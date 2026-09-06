@@ -228,7 +228,7 @@ $result = $conn->query($query);
                                     <td><strong><?php echo htmlspecialchars($row['item_name']); ?></strong></td>
                                     <td><?php echo htmlspecialchars($row['size']); ?></td>
                                     <td><?php echo $row['quantity']; ?></td>
-                                    <td class="price">₱<?php echo number_format($row['price'], 2); ?></td>
+                                    <td class="price">₱<?php echo number_format((float)($row['price'] ?? 0), 2); ?></td>
                                     <td><?php echo $row['flavor'] ? htmlspecialchars($row['flavor']) : 'N/A'; ?></td>
                                     <td><span class="void-type"><?php echo htmlspecialchars($row['void_type']); ?></span></td>
                                     <td><?php echo htmlspecialchars($row['voided_by']); ?></td>

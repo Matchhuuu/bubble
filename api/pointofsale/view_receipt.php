@@ -427,7 +427,7 @@ if ($items_result && $items_result->num_rows > 0) {
                             <?php endif; ?>
                         </div>
                         <div class="item-price">
-                            ₱<?php echo number_format($item['price'] * $item['quantity'], 2); ?>
+                            ₱<?php echo number_format((float)($item['price'] ?? 0) * (float)($item['quantity'] ?? 0), 2); ?>
                         </div>
                     </div>  
                 <?php endwhile; ?>
@@ -441,9 +441,9 @@ if ($items_result && $items_result->num_rows > 0) {
         <div class="totals-section">
             <div class="total-row">
                 <span>Subtotal</span>
-                <span>₱<?php echo number_format($subtotal > 0 ? $subtotal : $order['total'], 2); ?></span>
+                <span>₱<?php echo number_format($subtotal > 0 ? (float)$subtotal : (float)($order['total'] ?? 0), 2); ?></span>
             </div>
-            <?php if ($order['discount'] > 0): ?>
+            <?php if (($order['discount'] ?? 0) > 0): ?>
             <div class="total-row">
                 <span>
                     Discount
@@ -466,12 +466,12 @@ if ($items_result && $items_result->num_rows > 0) {
                     }
                     ?>
                 </span>
-                <span>-₱<?php echo number_format($order['discount'], 2); ?></span>
+                <span>-₱<?php echo number_format((float)($order['discount'] ?? 0), 2); ?></span>
             </div>
             <?php endif; ?>
             <div class="total-row">
                 <span><?php echo $order_type === 'takeout' ? 'Takeout' : 'Eat-In'; ?> Total (Incl GST)</span>
-                <span>₱<?php echo number_format($order['total'], 2); ?></span>
+                <span>₱<?php echo number_format((float)($order['total'] ?? 0), 2); ?></span>
             </div>
             <div class="total-row">
                 <span>Rounding Adjust</span>
@@ -479,25 +479,25 @@ if ($items_result && $items_result->num_rows > 0) {
             </div>
             <div class="total-row">
                 <span>Total Rounded</span>
-                <span>₱<?php echo number_format($order['total'], 2); ?></span>
+                <span>₱<?php echo number_format((float)($order['total'] ?? 0), 2); ?></span>
             </div>
         </div>
 
         <div class="payment-section">
             <div class="total-row">
                 <span>Cash Tendered</span>
-                <span>₱<?php echo number_format($order['amount_paid'], 2); ?></span>
+                <span>₱<?php echo number_format((float)($order['amount_paid'] ?? 0), 2); ?></span>
             </div>
             <div class="total-row">
                 <span>Change</span>
-                <span>₱<?php echo number_format($order['amount_paid'] - $order['total'], 2); ?></span>
+                <span>₱<?php echo number_format((float)($order['amount_paid'] ?? 0) - (float)($order['total'] ?? 0), 2); ?></span>
             </div>
         </div>
 
         <div class="totals-section">
             <div class="total-row">
                 <span>TOTAL INCLUDES GST</span>
-                <span>₱<?php echo number_format($order['total'] * 0.12, 2); ?></span>
+                <span>₱<?php echo number_format((float)($order['total'] ?? 0) * 0.12, 2); ?></span>
             </div>
         </div>
 

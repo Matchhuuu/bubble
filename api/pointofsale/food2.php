@@ -1064,7 +1064,7 @@ foreach ($sections as $section) {
                                                 <div>
                                                     <span class="size-badge"><?php echo htmlspecialchars($item['size_id']); ?></span>
                                                 </div>
-                                                <div class="item-price">₱<?php echo number_format($item['price'], 2); ?></div>
+                                                <div class="item-price">₱<?php echo number_format((float)($item['price'] ?? 0), 2); ?></div>
                                                 <div>
                                                     <span class="status-badge <?php echo $item['is_available'] ? 'status-available' : 'status-unavailable'; ?>">
                                                         <?php echo $item['is_available'] ? 'Available' : 'Unavailable'; ?>

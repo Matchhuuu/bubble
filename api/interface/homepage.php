@@ -7,19 +7,14 @@ $connection = $conn;
 
 
 // Get Total from Completed Orders
-global $total;
+$total = 0.0;
 global $sql_chiken;
 
-$total_sale = "SELECT total FROM customer_orders
-               WHERE status = 'Completed'";
-$total_sale = $connection->query($total_sale);
+$total_sale_query = "SELECT COALESCE(SUM(total), 0) as total FROM customer_orders WHERE status = 'Completed'";
+$total_sale = $connection->query($total_sale_query);
 
-if (!$total_sale) {
-  die("Invalid query: " . $connection->error);
-}
-
-while ($row = mysqli_fetch_array($total_sale)) {
-  $total += $row['total'];
+if ($total_sale && $row = $total_sale->fetch_assoc()) {
+  $total = (float)$row['total'];
 }
 
 // Handle form submit
@@ -63,7 +58,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
 
 
  // <CHANGE> Add database query to get logged-in user's name
-    $sql = "SELECT fname, lname FROM accounts WHERE ACC_ID = " . $_SESSION['ACC_ID'];
+    $sql = "SELECT fname, lname FROM accounts WHERE ACC_ID = " . intval($_SESSION['ACC_ID']);
     $result = $connection->query($sql);
     
     if($result && $result->num_rows > 0) {
@@ -708,7 +703,7 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
 
     <div class="main">
       <div class="sales-summary">
-        <h1 style="font-size: 60px;">Total Sale: Php <?php echo '' . number_format($total, 2, '.', ','); ?></h1>
+        <h1 style="font-size: 60px;">Total Sale: Php <?php echo '' . number_format((float)($total ?? 0), 2, '.', ','); ?></h1>
         <form action="/interface/get_sales.php?id="><button type="submit" class="btn-endsale"> End Sale </button>
         </form>
       </div>

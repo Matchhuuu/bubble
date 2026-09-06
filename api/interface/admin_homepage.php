@@ -5,7 +5,7 @@ include "db_conn.php";
 if(isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
     
     // <CHANGE> Add database query to get logged-in user's name
-    $sql = "SELECT fname, lname FROM accounts WHERE ACC_ID = " . $_SESSION['ACC_ID'];
+    $sql = "SELECT fname, lname FROM accounts WHERE ACC_ID = " . intval($_SESSION['ACC_ID']);
     $result = $conn->query($sql);
     
     if($result && $result->num_rows > 0) {

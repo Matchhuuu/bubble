@@ -540,15 +540,15 @@ th {
                     <div class="order-summary">
                         <div>
                             <h3>Total</h3>
-                            <p>Php <?php echo number_format($order['total'], 2); ?></p>
+                            <p>Php <?php echo number_format((float)($order['total'] ?? 0), 2); ?></p>
                         </div>
                         <div>
                             <h3>Discount</h3>
-                            <p>Php <?php echo number_format($order['discount'], 2); ?></p>
+                            <p>Php <?php echo number_format((float)($order['discount'] ?? 0), 2); ?></p>
                         </div>
                         <div>
                             <h3>Amount Paid</h3>
-                            <p>Php <?php echo number_format($order['amount_paid'], 2); ?></p>
+                            <p>Php <?php echo number_format((float)($order['amount_paid'] ?? 0), 2); ?></p>
                         </div>
                         <div>
                             <h3>Status</h3>
@@ -577,7 +577,7 @@ th {
                                         <td><?php echo $item['item_name']; ?></td>
                                         <td><?php echo $item['size_id']; ?></td>
                                         <td><?php echo $item['quantity']; ?></td>
-                                        <td>₱<?php echo number_format($item['price'], 2); ?></td>
+                                        <td>₱<?php echo number_format((float)($item['price'] ?? 0), 2); ?></td>
                                         <td><?php echo $item['flavor'] ? $item['flavor'] : 'N/A'; ?></td>
                                     </tr>
                                 <?php endforeach; ?>
