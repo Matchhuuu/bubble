@@ -1727,12 +1727,12 @@ INSERT INTO `menu_items` (`id`, `category_id`, `name`, `description`) VALUES
 CREATE TABLE `order_archive` (
   `id` int(11) NOT NULL,
   `order_id` varchar(50) NOT NULL,
-  `order_type` enum('dine_in','takeout') NOT NULL,
+  `order_type` enum('dine_in','takeout','delivery') NOT NULL DEFAULT 'dine_in',
   `total` decimal(10,2) NOT NULL,
-  `discount` decimal(10,2) NOT NULL,
+  `discount` decimal(10,2) NOT NULL DEFAULT 0.00,
   `discount_type` varchar(50) DEFAULT NULL,
-  `amount_paid` decimal(10,2) NOT NULL,
-  `status` enum('pending','confirmed','preparing','ready') DEFAULT 'pending',
+  `amount_paid` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `status` enum('Pending','Confirmed','Preparing','Order Ready','Completed','Done','cancelled') DEFAULT 'Completed',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
