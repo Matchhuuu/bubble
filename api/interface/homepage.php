@@ -743,14 +743,19 @@ if (isset($_SESSION['ACC_ID']) && isset($_SESSION['EMAIL'])) {
 
 
                   $sql_returned_goods = "
-                                                SELECT co.*, 
-                                                IF(GROUP_CONCAT(coi.menu_item_id) LIKE '%UNLICHICKENWINGS%', 'UNLICHICKENWINGS', coi.menu_item_id) as menu_item_id
+                                                SELECT 
+                                                    co.id,
+                                                    co.order_id,
+                                                    co.total,
+                                                    co.status,
+                                                    co.amount_paid,
+                                                    IF(GROUP_CONCAT(coi.menu_item_id) LIKE '%UNLICHICKENWINGS%', 'UNLICHICKENWINGS', COALESCE(MIN(coi.menu_item_id), '')) as menu_item_id
                                                 FROM customer_orders AS co
-                                                JOIN customer_order_items AS coi ON coi.order_id = co.order_id
+                                                LEFT JOIN customer_order_items AS coi ON coi.order_id = co.order_id
                                                 WHERE co.status IN ('Order Ready', 'Pending')
-                                                GROUP BY co.order_id
+                                                GROUP BY co.id, co.order_id, co.total, co.status, co.amount_paid
                                                 ORDER BY co.status DESC
-                                                                                            ";
+                                                ";
                   $result_returned_goods = $connection->query($sql_returned_goods);
 
 

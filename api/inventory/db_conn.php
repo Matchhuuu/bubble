@@ -21,5 +21,11 @@ if (!mysqli_real_connect($conn, $sname, $unmae, $password, $db_name, (int)$port,
 }
 
 // Disable ONLY_FULL_GROUP_BY for compatibility with legacy queries
-$conn->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+$mode_res = $conn->query("SELECT @@sql_mode as mode");
+if ($mode_res && $row = $mode_res->fetch_assoc()) {
+    $clean_modes = array_filter(explode(',', $row['mode']), function($m) {
+        return trim($m) !== '' && trim($m) !== 'ONLY_FULL_GROUP_BY';
+    });
+    $conn->query("SET SESSION sql_mode='" . implode(',', $clean_modes) . "'");
+}
 ?>
